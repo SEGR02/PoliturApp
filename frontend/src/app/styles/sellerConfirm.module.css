@@ -1,0 +1,39 @@
+.bodyContent {
+  width: 100% !important;
+  margin-left: 10%;
+}
+
+.thead {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.element {
+  width: 25%;
+  text-align: center;
+}
+
+.icons {
+  text-align: start;
+}
+
+.icons img {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.firstLine {
+  margin-left: -11.1%;
+}
+
+.button {
+  margin-right: 10%;
+  width: 20%;
+}
+
+.divInputsPayment {
+  justify-content: flex-start;
+  gap: 1%;
+  align-items: center;
+}

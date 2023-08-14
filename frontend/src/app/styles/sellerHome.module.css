@@ -1,0 +1,129 @@
+.container {
+  width: calc(100vw -140px);
+  height: calc(100vh - 140px);
+  margin: 70px;
+}
+
+.bodyContainer {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.titleContainer {
+  width: 100%;
+  height: 10%;
+}
+
+.firstLine {
+  border: 1px solid #acacac;
+}
+
+.secondLine {
+  height: 100%;
+  border: 1px solid #acacac;
+  margin: 0 25px;
+}
+
+.navbar {
+  width: 15%;
+  height: 90%;
+}
+
+.bodyContent {
+  width: 80%;
+  height: 90%;
+}
+
+.elementNavbar {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  gap: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-bottom: 25px;
+}
+
+.navbarP {
+  margin: 0;
+}
+
+.inputsContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.inputsContainer50 {
+  display: flex;
+  flex-direction: column;
+  width: 49%;
+}
+
+.inputs50Container,
+.inputs25Container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.inputsContainer25 {
+  display: flex;
+  flex-direction: column;
+  width: 23.5%;
+}
+
+.inputs33Container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.label {
+  margin-bottom: 5px;
+}
+
+.inputText {
+  border-radius: 3px;
+  border: 1px solid #49454f;
+  padding: 9px;
+}
+
+.button {
+  background-color: #ffa800;
+  border: none;
+  border-radius: 6px;
+  width: 15%;
+  height: 35%;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.buttonContainer {
+  height: 120px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.inputCustom {
+  height: 6vh;
+}
+
+.inputCustom div input {
+  border: 0.5px #49454f solid;
+  border-radius: 4px;
+}
+
+.link {
+  text-decoration: none;
+  color: #000;
+}
+
+.inputCustom div {
+  min-height: 4.9vh;
+  border-color: #49454f;
+  border-radius: 4px;
+}

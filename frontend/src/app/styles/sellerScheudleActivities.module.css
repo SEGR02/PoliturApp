@@ -1,0 +1,23 @@
+.buttonContainer {
+  height: 120px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pPayment {
+  font-weight: 700;
+  color: #79747e;
+}
+
+.pPayment span {
+  color: black;
+  font-weight: 900;
+  font-size: 1.3em;
+  margin-left: 3px;
+}
+
+.inputTotal {
+  border: none;
+  width: 65px;
+}
