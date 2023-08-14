@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/example/public_html/BackOffice
-    - /bin/rsync -av frontend/ $DEPLOYPATH
+    - /bin/cp index.html $DEPLOYPATH
