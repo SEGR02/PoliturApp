@@ -1,18 +1,18 @@
 "use client";
 import React from "react";
 import styles from "../../styles/sellerHome.module.css";
-import styles2 from "../../styles/sellerPassengersList.module.css";
+import styles2 from "../../styles/seller.calendar.module.css";
 import Navbar from "@/app/components/Navbar";
-import Table from "../../components/Table";
 import InputCustom from "@/app/components/InputCustom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { setActivitiesList } from "@/store/slices/activitiesList.slice";
+import axios from "axios";
+import TableCalendar from "@/app/components/TableCalendar";
 
-const PassengerList = () => {
+const Calendar = () => {
   const dispatch = useDispatch();
   const activiesList = useSelector((state: any) => state.activitiesList);
-  const [activitySelected, setActivitySelected] = React.useState<any>([]);
+  const [activitySelected, setActivitySelected] = React.useState<any>();
   const [hour, setHour] = React.useState<any>();
   const [date, setDate] = React.useState<any>();
   const [data, setData] = React.useState<any>();
@@ -44,7 +44,7 @@ const PassengerList = () => {
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
-        <h2>Listado de pasajeros</h2>
+        <h2>Calendar</h2>
       </div>
       <div className={styles.firstLine}></div>
       <div className={styles.bodyContainer}>
@@ -86,18 +86,11 @@ const PassengerList = () => {
               Buscar
             </button>
           </form>
-          <Table data={data} />
-          {data && (
-            <footer className={styles.buttonContainer}>
-              <button onClick={() => window.print()} className={styles.button}>
-                Imprimir
-              </button>
-            </footer>
-          )}
+          <TableCalendar />
         </div>
       </div>
     </div>
   );
 };
 
-export default PassengerList;
+export default Calendar;

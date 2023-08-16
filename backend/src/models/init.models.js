@@ -5,6 +5,9 @@ const ScheduledActivities = require("./scheduledActivities.models");
 const Orders = require("./orders.models");
 const ScheduledActivitiesAndPaymentsInOrders = require("./scheduledActivitiesAndPaymentsInOrders.models");
 const Payments = require("./payments.model");
+const PassengersInScheduledActivities = require("./passengersInScheduledActivities.models");
+const StockInScheduledActivities = require("./stockInScheduledActivities.models");
+const StockManagment = require("./stockManagment.models");
 
 const initModels = () => {
   Users;
@@ -14,6 +17,9 @@ const initModels = () => {
   Orders;
   ScheduledActivitiesAndPaymentsInOrders;
   Payments;
+  PassengersInScheduledActivities;
+  StockInScheduledActivities;
+  StockManagment;
 };
 
 module.exports = initModels;

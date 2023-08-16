@@ -8,6 +8,7 @@ import svg4 from "../../assets/🦆 icon _calendar search_.svg";
 import clockblue from "../../assets/clockblue.svg";
 import userYellow from "../../assets/user-yellow.svg";
 import peopleBlue from "../../assets/peopleBlue.svg";
+import calendarblue from "../../assets/calendarblue.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -66,10 +67,20 @@ const Navbar = () => {
           </p>
         </div>
       </Link>
-      <div className={styles.elementNavbar}>
-        <Image src={svg4} alt="" />
-        <p className={styles.navbarP}>Calendar</p>
-      </div>
+      <Link className={styles.link} href="/seller/calendar">
+        <div className={styles.elementNavbar}>
+          <Image
+            src={pathname == "/seller/calendar" ? calendarblue : svg4}
+            alt=""
+          />
+          <p
+            className={styles.navbarP}
+            style={pathname == "/seller/calendar" ? { color: "#002B5c" } : {}}
+          >
+            Calendar
+          </p>
+        </div>
+      </Link>
     </div>
   );
 };

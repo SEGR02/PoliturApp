@@ -3,7 +3,6 @@ const ScheduledActivitiesAndPaymentsInOrders = require("../models/scheduledActiv
 
 class PaymentServices {
   static async createPayments(newPayment) {
-    console.log(newPayment);
     try {
       const result = await Payments.create(newPayment);
       const result2 = await ScheduledActivitiesAndPaymentsInOrders.create({
