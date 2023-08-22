@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "../../styles/sellerHome.module.css";
 import styles2 from "../../styles/sellerScheudleActivities.module.css";
 import InputCustom2 from "../../components/InputCustom2";
@@ -12,36 +12,32 @@ import { setActivities2 } from "@/store/slices/activities.slice";
 import { setActivitiesList } from "@/store/slices/activitiesList.slice";
 
 const scheudleActivities = () => {
-  const [passengers, setPassengers] = React.useState<any>([]);
-  const [date, setDate] = React.useState("");
-  const [hour, setHour] = React.useState<any>("");
-  const [paymentType, setPaymentType] = React.useState<any>({
+  const [passengers, setPassengers] = useState<any>([]);
+  const [date, setDate] = useState("");
+  const [hour, setHour] = useState<any>("");
+  const [paymentType, setPaymentType] = useState<any>({
     value: "Operador",
   });
-  const [discount, setDiscount] = React.useState<any>("");
-  const [ticketValue, setTicketValue] = React.useState<any>("");
-  const [isCredit, setIsCredit] = React.useState<any>({ value: true });
-  const [total, setTotal] = React.useState<any>("0");
-  const [currency, setCurrency] = React.useState<any>({ value: "CLP" });
-  const [clients, setClients] = React.useState([]);
-  const aux: any = [];
-  const [activities, setActivities] = React.useState([]);
-  const [fullActivitySelected, setFullActivitySelected] = React.useState<any>();
-  const [activitySelected, setActivitySelected] = React.useState("");
-  const [activitiesFullData, setActivitiesFullData] = React.useState<
-    Activity | any
-  >();
+  const [discount, setDiscount] = useState<any>("");
+  const [ticketValue, setTicketValue] = useState<any>("");
+  const [isCredit, setIsCredit] = useState<any>({ value: true });
+  const [total, setTotal] = useState<any>("0");
+  const [currency, setCurrency] = useState<any>({ value: "CLP" });
+  const [clients, setClients] = useState([]);
+  const [activities, setActivities] = useState([]);
+  const [activitySelected, setActivitySelected] = useState<Activity | any>();
+  const [schedules, setSchedules] = useState<any>();
   const router = useRouter();
   const dispatch = useDispatch<any>();
 
   const submit = () => {
     const data = {
-      activityId: fullActivitySelected?.id,
-      activityName: fullActivitySelected?.name,
+      activityId: activitySelected?.id,
+      activityName: activitySelected?.name,
       currency: currency.value,
       date,
       discount,
-      hour: hour.label.slice(0, -5),
+      hour: hour.schedule,
       isCredit: isCredit.value,
       passengers,
       passengersQty: passengers.length,
@@ -60,20 +56,40 @@ const scheudleActivities = () => {
   interface Activity {
     name: string;
     tiketsPerDay: string;
+    ticketValue: string;
   }
 
   useEffect(() => {
-    const searchActivityPrice = () => {
-      return activitiesFullData?.find(
-        (activity: Activity) => activity.name == activitySelected?.slice(0, -5)
-      );
-    };
-    const fullActivitySelected = searchActivityPrice();
-    setTicketValue(
-      fullActivitySelected ? fullActivitySelected.ticketValue : ""
-    );
-    setFullActivitySelected(fullActivitySelected);
-  }, [activitySelected]);
+    if (activitySelected) {
+      axios
+        .get(`http://localhost:8000/api/v1/schedules/${activitySelected?.id}`)
+        .then((res: any) => {
+          res.data.forEach((schedule: any) => {
+            axios
+              .get(
+                `http://localhost:8000/api/v1/stock/?date=${date}&hour=${schedule.schedule}&activity_id=${activitySelected.id}`
+              )
+              .then((ans: any) => {
+                if (ans.data) {
+                  schedule.label =
+                    schedule.schedule + ` (${ans.data[0].stock})`;
+                  schedule.disabled = passengers.length > ans.data[0].stock;
+                } else {
+                  schedule.label =
+                    schedule.schedule + ` (${activitySelected.tiketsPerDay})`;
+                  schedule.disabled =
+                    passengers.length > activitySelected.tiketsPerDay;
+                }
+              })
+              .catch((error) => console.log(error));
+          });
+          setSchedules(res.data);
+        })
+        .catch((error) => console.log(error));
+
+      setTicketValue(activitySelected?.ticketValue);
+    }
+  }, [activitySelected, passengers]);
 
   useEffect(() => {
     const calculateTotal = () => {
@@ -105,12 +121,12 @@ const scheudleActivities = () => {
     axios
       .get("http://localhost:8000/api/v1/activities")
       .then((res) => {
-        setActivitiesFullData(res.data);
-        res.data.forEach((activity: Activity) => {
-          aux.push(activity.name + String(` (${activity.tiketsPerDay})`));
+        res.data.forEach((activity: any) => {
+          activity.label =
+            activity.name + String(` (${activity.tiketsPerDay})`);
         });
-        setActivities(aux);
-        dispatch(setActivitiesList(aux));
+        setActivities(res.data);
+        dispatch(setActivitiesList(res.data));
       })
       .catch((error) => console.log(error));
   }, []);
@@ -166,14 +182,7 @@ const scheudleActivities = () => {
                 <label className={styles.label} htmlFor="">
                   Hora de la Actividad
                 </label>
-                <InputCustom
-                  options={[
-                    { id: 1, label: "9:00 am (12)", value: "9:00 am" },
-                    { id: 2, label: "3:00 pm (12)", value: "3:00 pm" },
-                  ]}
-                  value={""}
-                  set={setHour}
-                />
+                <InputCustom options={schedules} value={""} set={setHour} />
               </div>
               <div className={styles.inputsContainer50}>
                 <label className={styles.label} htmlFor="">
@@ -217,7 +226,7 @@ const scheudleActivities = () => {
                 <input
                   className={styles2.inputTotal}
                   type="text"
-                  value={total == "0" ? "" : total}
+                  value={total == "0" || Number.isNaN(total) ? "" : total}
                   onChange={(e) => setTotal(e.target.value)}
                 />
                 <span>{currency?.value}</span>

@@ -26,7 +26,18 @@ const findAndUpdateStock = async (req, res, next) => {
   }
 };
 
+const getStock = async (req, res, next) => {
+  try {
+    const query = req.query;
+    const result = await StockServices.getStockByQuery(query);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createStock,
   findAndUpdateStock,
+  getStock,
 };

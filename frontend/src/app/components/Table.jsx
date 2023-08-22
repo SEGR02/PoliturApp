@@ -31,6 +31,7 @@ function ResponsiveExample({ data }) {
       });
       setDataPrueba(aux);
     } else {
+      const aux = [];
       data?.forEach((element) => {
         axios
           .get(`http://localhost:8000/api/v1/clients/${element.id}`)

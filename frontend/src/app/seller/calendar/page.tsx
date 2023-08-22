@@ -16,6 +16,21 @@ const Calendar = () => {
   const [hour, setHour] = React.useState<any>();
   const [date, setDate] = React.useState<any>();
   const [data, setData] = React.useState<any>();
+  const [schedules, setSchedules] = React.useState();
+
+  React.useEffect(() => {
+    if (activitySelected) {
+      axios
+        .get(`http://localhost:8000/api/v1/schedules/${activitySelected?.id}`)
+        .then((res: any) => {
+          res.data.forEach((schedule: any) => {
+            schedule.label = schedule.schedule;
+          });
+          setSchedules(res.data);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [activitySelected]);
 
   React.useEffect(() => {
     axios
@@ -30,13 +45,17 @@ const Calendar = () => {
   }, []);
 
   const submit = () => {
+    let url = `http://localhost:8000/api/v1/stock/?`;
+
+    if (date) url += `&date=${date}`;
+    if (hour) url += `&hour=${hour?.schedule}`;
+    if (activitySelected) url += `&activity_id=${activitySelected?.id}`;
+
     axios
-      .get(
-        `http://localhost:8000/api/v1/activities/scheduled?date=${date}&hour=${hour?.value}&activityId=${activitySelected?.id}`
-      )
+      .get(url)
       .then((res) => {
         setData(res.data);
-        setHour("");
+        console.log(res.data.length);
       })
       .catch((error) => console.log(error));
   };
@@ -67,18 +86,7 @@ const Calendar = () => {
             />
             <InputCustom
               placeholder="Seleccionar Hora"
-              options={[
-                {
-                  id: 1,
-                  label: "9:00 am",
-                  value: "9:00 am",
-                },
-                {
-                  id: 2,
-                  label: "3:00 pm",
-                  value: "3:00 pm",
-                },
-              ]}
+              options={schedules}
               value={hour}
               set={setHour}
             />
@@ -86,7 +94,14 @@ const Calendar = () => {
               Buscar
             </button>
           </form>
-          <TableCalendar />
+          <TableCalendar data={data} />
+          {data && (
+            <footer className={styles.buttonContainer}>
+              <button onClick={() => window.print()} className={styles.button}>
+                Imprimir
+              </button>
+            </footer>
+          )}
         </div>
       </div>
     </div>

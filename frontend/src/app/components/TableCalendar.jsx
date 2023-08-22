@@ -1,18 +1,41 @@
 "use client";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 
-function TableCalendar() {
+function TableCalendar({ data }) {
   const headers = [
     "Actividad",
     "Tickets Vendidos",
     "Tickets Disponibles",
-    "Turnos",
     "Hora",
     "Fecha",
   ];
 
+  const [finalData, setFinalData] = useState();
+
+  useEffect(() => {
+    if (data) {
+      data.forEach((activityScheduledInfo) => {
+        axios
+          .get(
+            `http://localhost:8000/api/v1/activities/${activityScheduledInfo.activityId}`
+          )
+          .then((res) => {
+            activityScheduledInfo.activityFullData = res.data;
+          })
+          .catch((error) => console.log(error));
+      });
+    }
+    setTimeout(() => {
+      setFinalData(data);
+    }, 50);
+  }, [data]);
+
+  if (!data) return null;
+
   return (
-    <Table responsive>
+    <Table size="sm" responsive>
       <thead>
         <tr>
           {headers.map((header) => (
@@ -21,27 +44,20 @@ function TableCalendar() {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          {Array.from({ length: 6 }).map((_, index) => (
-            <td style={{ textAlign: "center" }} key={index}>
-              Table cell {index}
+        {finalData?.map((activityInfo, index) => (
+          <tr>
+            <td style={{ textAlign: "center" }}>
+              {activityInfo?.activityFullData?.[0]?.name}
             </td>
-          ))}
-        </tr>
-        <tr>
-          {Array.from({ length: 6 }).map((_, index) => (
-            <td style={{ textAlign: "center" }} key={index}>
-              Table cell {index}
+            <td style={{ textAlign: "center" }}>
+              {activityInfo?.activityFullData?.[0]?.tiketsPerDay -
+                activityInfo?.stock}
             </td>
-          ))}
-        </tr>
-        <tr>
-          {Array.from({ length: 6 }).map((_, index) => (
-            <td style={{ textAlign: "center" }} key={index}>
-              Table cell {index}
-            </td>
-          ))}
-        </tr>
+            <td style={{ textAlign: "center" }}>{activityInfo?.stock}</td>
+            <td style={{ textAlign: "center" }}>{activityInfo?.hour}</td>
+            <td style={{ textAlign: "center" }}>{activityInfo?.date}</td>
+          </tr>
+        ))}
       </tbody>
     </Table>
   );

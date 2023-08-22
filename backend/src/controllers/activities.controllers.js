@@ -51,10 +51,14 @@ const scheduleActivity = async (req, res, next) => {
                 stock: ans.tiketsPerDay - scheduleActivity.passengersQty,
                 scheduledActivityId: scheduleActivity.id,
               });
-            } else console.log(res);
+            } else {
+              const updateExistingStock = StockServices.updateStock(
+                scheduleActivity,
+                res
+              );
+            }
           });
       });
-    // * FIVE
     res.json({
       scheduleActivity,
       enterPassengersInScheduledActivity,

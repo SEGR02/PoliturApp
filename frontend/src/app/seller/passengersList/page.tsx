@@ -6,8 +6,8 @@ import Navbar from "@/app/components/Navbar";
 import Table from "../../components/Table";
 import InputCustom from "@/app/components/InputCustom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { setActivitiesList } from "@/store/slices/activitiesList.slice";
+import axios from "axios";
 
 const PassengerList = () => {
   const dispatch = useDispatch();
@@ -16,6 +16,21 @@ const PassengerList = () => {
   const [hour, setHour] = React.useState<any>();
   const [date, setDate] = React.useState<any>();
   const [data, setData] = React.useState<any>();
+  const [schedules, setSchedules] = React.useState<any>();
+
+  React.useEffect(() => {
+    if (activitySelected) {
+      axios
+        .get(`http://localhost:8000/api/v1/schedules/${activitySelected?.id}`)
+        .then((res: any) => {
+          res.data.forEach((schedule: any) => {
+            schedule.label = schedule.schedule;
+          });
+          setSchedules(res.data);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [activitySelected]);
 
   React.useEffect(() => {
     axios
@@ -32,7 +47,7 @@ const PassengerList = () => {
   const submit = () => {
     axios
       .get(
-        `http://localhost:8000/api/v1/activities/scheduled?date=${date}&hour=${hour?.value}&activityId=${activitySelected?.id}`
+        `http://localhost:8000/api/v1/activities/scheduled?date=${date}&hour=${hour?.label}&activityId=${activitySelected?.id}`
       )
       .then((res) => {
         setData(res.data);
@@ -67,19 +82,8 @@ const PassengerList = () => {
             />
             <InputCustom
               placeholder="Seleccionar Hora"
-              options={[
-                {
-                  id: 1,
-                  label: "9:00 am",
-                  value: "9:00 am",
-                },
-                {
-                  id: 2,
-                  label: "3:00 pm",
-                  value: "3:00 pm",
-                },
-              ]}
-              value={hour}
+              options={schedules}
+              value={""}
               set={setHour}
             />
             <button type="button" onClick={submit}>

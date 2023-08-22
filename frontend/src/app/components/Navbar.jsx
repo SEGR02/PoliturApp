@@ -11,9 +11,15 @@ import peopleBlue from "../../assets/peopleBlue.svg";
 import calendarblue from "../../assets/calendarblue.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import NavbarAdmin from "./NavbarAdmin";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const seller = "seller";
+
+  if (!pathname.includes(seller)) {
+    return <NavbarAdmin />;
+  }
 
   return (
     <div className={styles.navbar}>
