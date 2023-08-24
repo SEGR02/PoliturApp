@@ -16,6 +16,8 @@ import {
 } from "@/store/slices/paymentsList.slice";
 import axios from "axios";
 import { removeAllActivities } from "@/store/slices/activities.slice";
+import jwt, { JwtPayload } from "jsonwebtoken";
+const secretWord = process.env.JWT_SECRET;
 
 const Confirm = () => {
   const activities = useSelector((state: any) => state.activities.data);
@@ -25,13 +27,22 @@ const Confirm = () => {
   const [payments, setPayments] = React.useState<any>([]);
   const [totalPayments, setTotalPayments] = React.useState<any>();
   const paymentsList = useSelector((state: any) => state.paymentsList.data);
+  const sellerId: any = localStorage.getItem("sellerId");
 
   const submit = () => {
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const finalDate = `${year}-${month < 10 ? `0${month}` : month}-${day}`;
+
     axios
       .post("http://localhost:8000/api/v1/orders", {
         total,
         activitiesQty: activities.length,
         payments_qty: paymentsList.length,
+        buyDate: finalDate,
+        sellerId,
       })
       .then((res) => {
         paymentsList.forEach((payment: any) => {

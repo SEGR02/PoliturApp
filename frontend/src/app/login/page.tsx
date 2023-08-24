@@ -15,8 +15,8 @@ const Login: FC = () => {
     axios
       .post("http://localhost:8000/api/v1/auth/login", { email, password })
       .then((res) => {
-        console.log(res.status);
-        router.push("/seller");
+        router.push("/seller/createClient");
+        localStorage.setItem("sellerId", res.data.id);
       })
       .catch((error) => alert("Credenciales incorrectas" + error));
   };

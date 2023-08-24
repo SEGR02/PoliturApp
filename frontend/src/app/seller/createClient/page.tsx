@@ -19,7 +19,6 @@ const SellerHome = () => {
   const [operator, setOperator] = React.useState<any>({ value: "" });
 
   const submit = () => {
-    console.log(nationality, documentType, operator);
     axios
       .post("http://localhost:8000/api/v1/clients", {
         fullname: name,

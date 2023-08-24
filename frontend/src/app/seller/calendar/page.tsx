@@ -55,7 +55,6 @@ const Calendar = () => {
       .get(url)
       .then((res) => {
         setData(res.data);
-        console.log(res.data.length);
       })
       .catch((error) => console.log(error));
   };

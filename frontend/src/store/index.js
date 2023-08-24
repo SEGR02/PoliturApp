@@ -3,6 +3,7 @@ import isLoadingSlice from "./slices/isLoading.slice";
 import activitiesSlice from "./slices/activities.slice";
 import paymentsListSlice from "./slices/paymentsList.slice";
 import activitiesListSlice from "./slices/activitiesList.slice";
+import sellerSlice from "./slices/seller.slice";
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     activities: activitiesSlice,
     paymentsList: paymentsListSlice,
     activitiesList: activitiesListSlice,
+    seller: sellerSlice,
   },
 });
