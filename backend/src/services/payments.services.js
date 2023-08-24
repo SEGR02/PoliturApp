@@ -14,6 +14,15 @@ class PaymentServices {
       throw error;
     }
   }
+
+  static async findAllPayments(query) {
+    try {
+      const result = await Payments.findAll({ where: query });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = PaymentServices;

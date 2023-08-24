@@ -10,8 +10,13 @@ const Users = db.define(
       type: DataTypes.INTEGER,
       autoIncrement: true,
     },
-    username: {
+    fullname: {
+      type: DataTypes.STRING(50),
+      allowNull: false,
+    },
+    rut: {
       type: DataTypes.STRING(20),
+      unique: true,
       allowNull: false,
     },
     email: {
@@ -26,10 +31,9 @@ const Users = db.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    isConfirmed: {
+    isAdmin: {
       type: DataTypes.BOOLEAN,
-      field: "is_confirmed",
-      defaultValue: false,
+      allowNull: false,
     },
   },
   {

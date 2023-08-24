@@ -7,6 +7,11 @@ const Orders = db.define("orders", {
     type: DataTypes.INTEGER,
     autoIncrement: true,
   },
+  buyDate: {
+    type: DataTypes.STRING,
+    field: "buy_date",
+    allowNull: false,
+  },
   total: {
     type: DataTypes.FLOAT,
     allowNull: false,
@@ -19,6 +24,11 @@ const Orders = db.define("orders", {
   payments_qty: {
     type: DataTypes.INTEGER,
     field: "payments_qty",
+    allowNull: false,
+  },
+  sellerId: {
+    type: DataTypes.INTEGER,
+    field: "seller_id",
     allowNull: false,
   },
 });

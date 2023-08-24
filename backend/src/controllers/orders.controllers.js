@@ -10,6 +10,17 @@ const createOrder = async (req, res, next) => {
   }
 };
 
+const getAllOrders = async (req, res, next) => {
+  try {
+    const query = req.query;
+    const result = await OrderServices.getAllOrders(query);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createOrder,
+  getAllOrders,
 };

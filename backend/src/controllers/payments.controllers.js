@@ -10,6 +10,17 @@ const createPayments = async (req, res, next) => {
   }
 };
 
+const getAllPayments = async (req, res, next) => {
+  try {
+    const query = req.query;
+    const result = await PaymentServices.findAllPayments(query);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createPayments,
+  getAllPayments,
 };

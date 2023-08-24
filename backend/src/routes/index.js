@@ -6,6 +6,7 @@ const ordersRoutes = require("../routes/orders.router");
 const paymentsRoutes = require("../routes/payments.router");
 const stockRoutes = require("./stock.router");
 const schedulesRoutes = require("./schedules.router");
+const usersRoutes = require("./users.router");
 
 const routerApi = (app) => {
   app.use("/api/v1/auth", authRoutes, error);
@@ -15,6 +16,7 @@ const routerApi = (app) => {
   app.use("/api/v1/payments", paymentsRoutes, error);
   app.use("/api/v1/stock", stockRoutes, error);
   app.use("/api/v1/schedules", schedulesRoutes, error);
+  app.use("/api/v1/users", usersRoutes, error);
 };
 
 module.exports = routerApi;
