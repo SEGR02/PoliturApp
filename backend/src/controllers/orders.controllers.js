@@ -20,7 +20,17 @@ const getAllOrders = async (req, res, next) => {
   }
 };
 
+const getAvailableMonths = async (req, res, next) => {
+  try {
+    const result = await OrderServices.getMonthsAvailable();
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createOrder,
   getAllOrders,
+  getAvailableMonths,
 };

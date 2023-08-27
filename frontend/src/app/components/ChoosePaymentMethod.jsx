@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import styles2 from "../styles/sellerConfirm.module.css";
 import styles from "../styles/sellerHome.module.css";
 import InputCustom from "./InputCustom";
@@ -9,11 +9,11 @@ import y from "../../assets/🦆 icon _tick circle_.svg";
 import { useDispatch } from "react-redux";
 import { setPaymentsList } from "@/store/slices/paymentsList.slice";
 
-const ChoosePaymentMethod = ({ set }) => {
+const ChoosePaymentMethod = ({ set, total, operatorsList }) => {
   const [isCredit, setIsCredit] = React.useState();
   const [paymentType, setPaymentType] = React.useState();
   const [currency, setCurrency] = React.useState();
-  const [amount, setAmount] = React.useState();
+  const [amount, setAmount] = React.useState(total);
   const [operator, setOperator] = React.useState();
   const dispatch = useDispatch();
   const [show, setShow] = React.useState(true);
@@ -119,18 +119,7 @@ const ChoosePaymentMethod = ({ set }) => {
           <InputCustom
             className={styles2.element}
             placeholder="Operador"
-            options={[
-              {
-                id: 1,
-                label: "Hotel Pucon",
-                value: "Hotel Pucon",
-              },
-              {
-                id: 2,
-                label: "Hotel Villanueva",
-                value: "Hotel Villanueva",
-              },
-            ]}
+            options={operatorsList}
             value={operator}
             set={setOperator}
           />
@@ -145,8 +134,10 @@ const ChoosePaymentMethod = ({ set }) => {
               dispatch(
                 setPaymentsList({
                   isCredit: isCredit?.value,
-                  paymentType: paymentType?.value,
-                  currency: currency?.value,
+                  paymentType: paymentType?.value
+                    ? paymentType?.value
+                    : "Credito",
+                  currency: currency?.value ? currency?.value : "CLP",
                   operator: operator?.value,
                   amount,
                 })

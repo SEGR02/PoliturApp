@@ -26,6 +26,14 @@ const Orders = db.define("orders", {
     field: "payments_qty",
     allowNull: false,
   },
+  isCredit: {
+    type: DataTypes.BOOLEAN,
+    field: "is_credit",
+    allowNull: false,
+  },
+  operator: {
+    type: DataTypes.STRING,
+  },
   sellerId: {
     type: DataTypes.INTEGER,
     field: "seller_id",

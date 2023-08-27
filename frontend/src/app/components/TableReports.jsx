@@ -3,7 +3,12 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 
-const TableReports = ({ customDate, sellerId = undefined }) => {
+const TableReports = ({
+  customDate = undefined,
+  sellerId = undefined,
+  customMonth = undefined,
+  customYear = "",
+}) => {
   const date = new Date();
   const day = date.getDate();
   const month = date.getMonth() + 1;
@@ -34,6 +39,8 @@ const TableReports = ({ customDate, sellerId = undefined }) => {
 
     if (finalDate) url += `&buyDate=${customDate ? customDate : finalDate}`;
     if (sellerId) url += `&sellerId=${sellerId}`;
+    if (customMonth) url += `&month=${customMonth}`;
+    if (customYear) url += `&year=${customYear}`;
 
     axios.get(url).then((res) => {
       res.data.forEach((order) => {
@@ -76,7 +83,7 @@ const TableReports = ({ customDate, sellerId = undefined }) => {
       });
     });
     setTimeout(() => setData(aux), 65);
-  }, [customDate]);
+  }, [customDate, month, year, sellerId]);
 
   return (
     <Table size="sm" responsive>

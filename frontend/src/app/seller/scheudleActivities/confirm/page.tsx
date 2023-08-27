@@ -16,8 +16,6 @@ import {
 } from "@/store/slices/paymentsList.slice";
 import axios from "axios";
 import { removeAllActivities } from "@/store/slices/activities.slice";
-import jwt, { JwtPayload } from "jsonwebtoken";
-const secretWord = process.env.JWT_SECRET;
 
 const Confirm = () => {
   const activities = useSelector((state: any) => state.activities.data);
@@ -28,6 +26,7 @@ const Confirm = () => {
   const [totalPayments, setTotalPayments] = React.useState<any>();
   const paymentsList = useSelector((state: any) => state.paymentsList.data);
   const sellerId: any = localStorage.getItem("sellerId");
+  const [operatorsList, setOperatorsList] = React.useState();
 
   const submit = () => {
     const date = new Date();
@@ -43,6 +42,8 @@ const Confirm = () => {
         payments_qty: paymentsList.length,
         buyDate: finalDate,
         sellerId,
+        isCredit: paymentsList?.[0]?.isCredit,
+        operator: paymentsList?.[0]?.operator,
       })
       .then((res) => {
         paymentsList.forEach((payment: any) => {
@@ -103,6 +104,15 @@ const Confirm = () => {
     }
     setTotalPayments(aux);
   }, [paymentsList]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/api/v1/operators").then((res) => {
+      res.data.forEach((operator: any) => {
+        operator.label = operator.name;
+      });
+      setOperatorsList(res.data);
+    });
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -185,7 +195,11 @@ const Confirm = () => {
           {total - totalPayments !== 0 &&
             payments?.map((a: any) => (
               <>
-                <ChoosePaymentMethod set={setPayments} />
+                <ChoosePaymentMethod
+                  set={setPayments}
+                  total={total}
+                  operatorsList={operatorsList}
+                />
               </>
             ))}
           <div className={styles.buttonContainer}>

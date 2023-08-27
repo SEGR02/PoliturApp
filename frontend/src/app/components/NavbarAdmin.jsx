@@ -13,6 +13,8 @@ import creditsReport from "@/assets/creditsReport.svg";
 import creditsReportYellow from "@/assets/creditsReportYellow.svg";
 import managePayments from "@/assets/managePayments.svg";
 import managePaymentsYellow from "@/assets/managePaymentsYellow.svg";
+import allCredits from "@/assets/allCredits.svg";
+import allCreditsYellow from "@/assets/allCreditsYellow.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -134,6 +136,22 @@ const NavbarAdmin = () => {
             }
           >
             Gestionar Pagos
+          </p>
+        </div>
+      </Link>
+      <Link className={styles.link} href="/admin/allCredits">
+        <div className={styles.elementNavbar}>
+          <Image
+            src={
+              pathname == "/admin/allCredits" ? allCredits : allCreditsYellow
+            }
+            alt=""
+          />
+          <p
+            className={styles.navbarP}
+            style={pathname == "/admin/allCredits" ? { color: "#002B5c" } : {}}
+          >
+            Todos Creditos
           </p>
         </div>
       </Link>

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../../styles/sellerHome.module.css";
 import InputCustom from "../../components/InputCustom";
 import axios from "axios";
@@ -17,6 +17,7 @@ const SellerHome = () => {
   const [numberDocument, setNumberDocument] = React.useState<any>(0);
   const [hotel, setHotel] = React.useState("");
   const [operator, setOperator] = React.useState<any>({ value: "" });
+  const [operatorsList, setOperatorsList] = React.useState<any>([]);
 
   const submit = () => {
     axios
@@ -30,9 +31,10 @@ const SellerHome = () => {
         isPassport: documentType.value,
         ndocument: numberDocument,
         hotel,
-        operator: operator.value,
+        operator: operator.name,
       })
       .then((res) => alert("user created" + res.status))
+      .catch((err) => alert("error" + err))
       .finally(() => {
         setName("");
         setNumber("");
@@ -41,9 +43,17 @@ const SellerHome = () => {
         setAge(0);
         setNumberDocument("");
         setHotel("");
-        setOperator({ value: "" });
       });
   };
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/api/v1/operators").then((res) => {
+      res.data.forEach((operator: any) => {
+        operator.label = operator.name;
+      });
+      setOperatorsList(res.data);
+    });
+  }, []);
 
   return (
     <>
@@ -169,14 +179,7 @@ const SellerHome = () => {
                   Operador
                 </label>
                 <InputCustom
-                  options={[
-                    { id: 1, label: "Hotel Pucon", value: "Hotel Pucon" },
-                    {
-                      id: 2,
-                      label: "Hotel Villanueva",
-                      value: "Hotel Villanueva",
-                    },
-                  ]}
+                  options={operatorsList}
                   value={operator}
                   set={setOperator}
                 />
