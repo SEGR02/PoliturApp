@@ -21,7 +21,9 @@ const PassengerList = () => {
   React.useEffect(() => {
     if (activitySelected) {
       axios
-        .get(`http://localhost:8000/api/v1/schedules/${activitySelected?.id}`)
+        .get(
+          `https://politurapp-production.up.railway.app/api/v1/schedules/${activitySelected?.id}`
+        )
         .then((res: any) => {
           res.data.forEach((schedule: any) => {
             schedule.label = schedule.schedule;
@@ -34,7 +36,7 @@ const PassengerList = () => {
 
   React.useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/activities")
+      .get("https://politurapp-production.up.railway.app/api/v1/activities")
       .then((res) => {
         res.data.forEach((activity: any) => {
           activity.label = activity.name;
@@ -47,7 +49,7 @@ const PassengerList = () => {
   const submit = () => {
     axios
       .get(
-        `http://localhost:8000/api/v1/activities/scheduled?date=${date}&hour=${hour?.label}&activityId=${activitySelected?.id}`
+        `https://politurapp-production.up.railway.app/api/v1/activities/scheduled?date=${date}&hour=${hour?.label}&activityId=${activitySelected?.id}`
       )
       .then((res) => {
         setData(res.data);

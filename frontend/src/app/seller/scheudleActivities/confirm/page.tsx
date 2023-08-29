@@ -39,7 +39,7 @@ const Confirm = () => {
     const finalDate = `${year}-${month < 10 ? `0${month}` : month}-${day}`;
 
     axios
-      .post("http://localhost:8000/api/v1/orders", {
+      .post("https://politurapp-production.up.railway.app/api/v1/orders", {
         total,
         activitiesQty: activities.length,
         payments_qty: paymentsList.length,
@@ -51,13 +51,16 @@ const Confirm = () => {
       .then((res) => {
         paymentsList.forEach((payment: any) => {
           axios
-            .post("http://localhost:8000/api/v1/payments", {
-              isCredit: payment.isCredit,
-              paymentType: payment.paymentType,
-              currency: payment.currency,
-              total: payment.amount,
-              orderId: res.data.id,
-            })
+            .post(
+              "https://politurapp-production.up.railway.app/api/v1/payments",
+              {
+                isCredit: payment.isCredit,
+                paymentType: payment.paymentType,
+                currency: payment.currency,
+                total: payment.amount,
+                orderId: res.data.id,
+              }
+            )
             .then((res) => {
               alert("Actividad turistica agendada desde confirm" + res.status);
             })
@@ -66,19 +69,22 @@ const Confirm = () => {
 
         activities.forEach((activity: any) => {
           axios
-            .post("http://localhost:8000/api/v1/activities", {
-              date: activity.date,
-              passengersQty: activity.passengers.length,
-              hour: activity.hour,
-              activityId: activity.activityId,
-              discount: activity.discount,
-              isCredit: paymentsList[0].isCredit,
-              paymentType: paymentsList[0].paymentType,
-              currency: paymentsList[0].currency,
-              total: activity.total,
-              passengers: activity.passengers,
-              orderId: res.data.id,
-            })
+            .post(
+              "https://politurapp-production.up.railway.app/api/v1/activities",
+              {
+                date: activity.date,
+                passengersQty: activity.passengers.length,
+                hour: activity.hour,
+                activityId: activity.activityId,
+                discount: activity.discount,
+                isCredit: paymentsList[0].isCredit,
+                paymentType: paymentsList[0].paymentType,
+                currency: paymentsList[0].currency,
+                total: activity.total,
+                passengers: activity.passengers,
+                orderId: res.data.id,
+              }
+            )
             .then((res) => {
               alert("Actividad turistica agendada desde confirm" + res.status);
               router.push("/seller/createClient");
@@ -109,12 +115,14 @@ const Confirm = () => {
   }, [paymentsList]);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/v1/operators").then((res) => {
-      res.data.forEach((operator: any) => {
-        operator.label = operator.name;
+    axios
+      .get("https://politurapp-production.up.railway.app/api/v1/operators")
+      .then((res) => {
+        res.data.forEach((operator: any) => {
+          operator.label = operator.name;
+        });
+        setOperatorsList(res.data);
       });
-      setOperatorsList(res.data);
-    });
   }, []);
 
   return (

@@ -13,7 +13,10 @@ const Login: FC = () => {
   const submit = (): void => {
     event?.preventDefault();
     axios
-      .post("http://localhost:8000/api/v1/auth/login", { email, password })
+      .post("https://politurapp-production.up.railway.app/api/v1/auth/login", {
+        email,
+        password,
+      })
       .then((res) => {
         router.push("/seller/createClient");
         localStorage.setItem("sellerId", res.data.id);

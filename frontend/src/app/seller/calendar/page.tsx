@@ -21,7 +21,9 @@ const Calendar = () => {
   React.useEffect(() => {
     if (activitySelected) {
       axios
-        .get(`http://localhost:8000/api/v1/schedules/${activitySelected?.id}`)
+        .get(
+          `https://politurapp-production.up.railway.app/api/v1/schedules/${activitySelected?.id}`
+        )
         .then((res: any) => {
           res.data.forEach((schedule: any) => {
             schedule.label = schedule.schedule;
@@ -34,7 +36,7 @@ const Calendar = () => {
 
   React.useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/activities")
+      .get("https://politurapp-production.up.railway.app/api/v1/activities")
       .then((res) => {
         res.data.forEach((activity: any) => {
           activity.label = activity.name;
@@ -45,7 +47,7 @@ const Calendar = () => {
   }, []);
 
   const submit = () => {
-    let url = `http://localhost:8000/api/v1/stock/?`;
+    let url = `https://politurapp-production.up.railway.app/api/v1/stock/?`;
 
     if (date) url += `&date=${date}`;
     if (hour) url += `&hour=${hour?.schedule}`;

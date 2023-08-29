@@ -15,12 +15,14 @@ const CreditsReport = () => {
   const [operatorsList, setOperatorsList] = useState<any>();
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/v1/operators").then((res) => {
-      res.data.forEach((operator: any) => {
-        operator.label = operator.name;
+    axios
+      .get("https://politurapp-production.up.railway.app/api/v1/operators")
+      .then((res) => {
+        res.data.forEach((operator: any) => {
+          operator.label = operator.name;
+        });
+        setOperatorsList(res.data);
       });
-      setOperatorsList(res.data);
-    });
   }, []);
 
   return (

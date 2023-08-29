@@ -1,5 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/example/backoffice.politur.com
-    - /bin/cp index.html $DEPLOYPATH

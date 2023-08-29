@@ -14,7 +14,7 @@ const TableManagePayments = () => {
   ];
 
   useEffect(() => {
-    const url = `http://localhost:8000/api/v1/managmentPayments`;
+    const url = `https://politurapp-production.up.railway.app/api/v1/managmentPayments`;
     axios.get(url).then((res) => console.log(res.data));
   }, []);
 

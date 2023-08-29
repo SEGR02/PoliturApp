@@ -16,7 +16,7 @@ const TableCreditsReports = ({
   useEffect(() => {
     let totalAux = 0;
     const aux = [];
-    let url = `http://localhost:8000/api/v1/orders/?is_credit=true`;
+    let url = `https://politurapp-production.up.railway.app/api/v1/orders/?is_credit=true`;
 
     if (sinceDate) url += `&sinceDate=${sinceDate}`;
     if (untilDate) url += `&untilDate=${untilDate}`;
@@ -27,10 +27,14 @@ const TableCreditsReports = ({
     axios.get(url).then((res) => {
       res.data.forEach((order) => {
         axios
-          .get(`http://localhost:8000/api/v1/users/${order.sellerId}`)
+          .get(
+            `https://politurapp-production.up.railway.app/api/v1/users/${order.sellerId}`
+          )
           .then((res2) => {
             axios
-              .get(`http://localhost:8000/api/v1/payments?orderId=${order?.id}`)
+              .get(
+                `https://politurapp-production.up.railway.app/api/v1/payments?orderId=${order?.id}`
+              )
               .then((ans) => {
                 ans.data.forEach((payment) => {
                   aux.push({

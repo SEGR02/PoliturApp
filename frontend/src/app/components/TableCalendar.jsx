@@ -19,7 +19,7 @@ function TableCalendar({ data }) {
       data.forEach((activityScheduledInfo) => {
         axios
           .get(
-            `http://localhost:8000/api/v1/activities/${activityScheduledInfo.activityId}`
+            `https://politurapp-production.up.railway.app/api/v1/activities/${activityScheduledInfo.activityId}`
           )
           .then((res) => {
             activityScheduledInfo.activityFullData = res.data;

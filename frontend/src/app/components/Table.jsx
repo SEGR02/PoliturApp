@@ -23,7 +23,9 @@ function ResponsiveExample({ data }) {
       const aux = [];
       data?.forEach((element) => {
         axios
-          .get(`http://localhost:8000/api/v1/clients/${element.id}`)
+          .get(
+            `https://politurapp-production.up.railway.app/api/v1/clients/${element.id}`
+          )
           .then((res) => {
             aux.push(...res.data);
           })
@@ -34,7 +36,9 @@ function ResponsiveExample({ data }) {
       const aux = [];
       data?.forEach((element) => {
         axios
-          .get(`http://localhost:8000/api/v1/clients/${element.id}`)
+          .get(
+            `https://politurapp-production.up.railway.app/api/v1/clients/${element.id}`
+          )
           .then((res) => {
             setDataPrueba(res.data);
             aux.push(...res.data);

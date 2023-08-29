@@ -62,12 +62,14 @@ const scheudleActivities = () => {
   useEffect(() => {
     if (activitySelected) {
       axios
-        .get(`http://localhost:8000/api/v1/schedules/${activitySelected?.id}`)
+        .get(
+          `https://politurapp-production.up.railway.app/api/v1/schedules/${activitySelected?.id}`
+        )
         .then((res: any) => {
           res.data.forEach((schedule: any) => {
             axios
               .get(
-                `http://localhost:8000/api/v1/stock/?date=${date}&hour=${schedule.schedule}&activity_id=${activitySelected.id}`
+                `https://politurapp-production.up.railway.app/api/v1/stock/?date=${date}&hour=${schedule.schedule}&activity_id=${activitySelected.id}`
               )
               .then((ans: any) => {
                 if (ans.data) {
@@ -109,7 +111,7 @@ const scheudleActivities = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/clients")
+      .get("https://politurapp-production.up.railway.app/api/v1/clients")
       .then((res) => {
         res.data.forEach((client: Client) => {
           client.label = client.fullname;
@@ -119,7 +121,7 @@ const scheudleActivities = () => {
       .catch((error) => console.log(error));
 
     axios
-      .get("http://localhost:8000/api/v1/activities")
+      .get("https://politurapp-production.up.railway.app/api/v1/activities")
       .then((res) => {
         res.data.forEach((activity: any) => {
           activity.label =
