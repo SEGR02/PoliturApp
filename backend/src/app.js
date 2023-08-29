@@ -22,8 +22,8 @@ db.authenticate()
 db.sync({ force: false })
   .then(() => {
     console.log("db synched");
-    activities.forEach((activity) => Activities.create(activity));
-    schedules.forEach((schedule) => SchedulesInActivities.create(schedule));
+    // activities.forEach((activity) => Activities.create(activity));
+    // schedules.forEach((schedule) => SchedulesInActivities.create(schedule));
   })
   .catch((error) => console.log(error));
 
