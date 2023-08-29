@@ -56,6 +56,7 @@ const Calendar = () => {
     axios
       .get(url)
       .then((res) => {
+        // setTimeout(() => setData(res.data), 100);
         setData(res.data);
       })
       .catch((error) => console.log(error));
