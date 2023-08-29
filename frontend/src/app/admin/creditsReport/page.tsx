@@ -1,16 +1,27 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/sellerHome.module.css";
 import styles2 from "../../styles/sellerPassengersList.module.css";
 import styles3 from "@/app/styles/creditsReport.module.css";
 import NavbarAdmin from "@/app/components/NavbarAdmin";
 import TableCreditsReport from "@/app/components/TableCreditsReport";
 import InputCustom from "@/app/components/InputCustom";
+import axios from "axios";
 
 const CreditsReport = () => {
   const [sinceDate, setSinceData] = useState<any>();
   const [untilDate, setUntilData] = useState<any>();
   const [operator, setOperator] = useState<any>();
+  const [operatorsList, setOperatorsList] = useState<any>();
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/api/v1/operators").then((res) => {
+      res.data.forEach((operator: any) => {
+        operator.label = operator.name;
+      });
+      setOperatorsList(res.data);
+    });
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -19,8 +30,8 @@ const CreditsReport = () => {
           <InputCustom
             value={operator}
             set={setOperator}
-            options={"operatorsList"}
-            placeholder="Seleccione un vendedor"
+            options={operatorsList}
+            placeholder="Seleccione un Operador"
           />
         </div>
       </div>
@@ -55,8 +66,15 @@ const CreditsReport = () => {
               />
             </div>
           </form>
-          {sinceDate && untilDate && (
+          {sinceDate && untilDate && !operator && (
             <TableCreditsReport sinceDate={sinceDate} untilDate={untilDate} />
+          )}
+          {sinceDate && untilDate && operator && (
+            <TableCreditsReport
+              sinceDate={sinceDate}
+              untilDate={untilDate}
+              operator={operator?.name}
+            />
           )}
         </div>
       </div>

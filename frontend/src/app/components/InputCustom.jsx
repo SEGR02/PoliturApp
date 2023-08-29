@@ -7,6 +7,7 @@ const TypeaheadExample = ({ options, value, set, placeholder = "" }) => {
   return (
     <Typeahead
       placeholder={placeholder}
+      // labelKey="name"
       id="inputCustom"
       className={styles.inputCustom}
       onChange={(selected) => {

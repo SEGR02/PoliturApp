@@ -3,7 +3,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 
-const TableCreditsReports = ({ sinceDate, untilDate }) => {
+const TableCreditsReports = ({
+  sinceDate,
+  untilDate,
+  operator = undefined,
+}) => {
   const [data, setData] = useState(false);
   const [total, setTotal] = useState(false);
 
@@ -16,10 +20,12 @@ const TableCreditsReports = ({ sinceDate, untilDate }) => {
 
     if (sinceDate) url += `&sinceDate=${sinceDate}`;
     if (untilDate) url += `&untilDate=${untilDate}`;
+    if (operator) url += `&operator=${operator}`;
+
+    console.log(url);
 
     axios.get(url).then((res) => {
       res.data.forEach((order) => {
-        console.log("order: ", order);
         axios
           .get(`http://localhost:8000/api/v1/users/${order.sellerId}`)
           .then((res2) => {
@@ -27,7 +33,6 @@ const TableCreditsReports = ({ sinceDate, untilDate }) => {
               .get(`http://localhost:8000/api/v1/payments?orderId=${order?.id}`)
               .then((ans) => {
                 ans.data.forEach((payment) => {
-                  console.log("payment: ", payment);
                   aux.push({
                     buyDate: order.buyDate,
                     total: payment.total,

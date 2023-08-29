@@ -12,7 +12,7 @@ class OrderServices {
   }
   static async getAllOrders(query) {
     try {
-      const { month, year, sinceDate, untilDate } = query;
+      const { month, year, sinceDate, untilDate, operator } = query;
       const filters = {};
       if (month && year) {
         const startDate = new Date(`${year}-${month}-01T00:00:00.000Z`);
@@ -31,6 +31,8 @@ class OrderServices {
           [Op.gte]: new Date(sinceDate),
           [Op.lt]: new Date(untilDate),
         };
+        filters.is_credit = true;
+        if (operator) filters.operator = operator;
       }
 
       const result = await Orders.findAll({
@@ -61,6 +63,23 @@ class OrderServices {
       });
 
       return Array.from(uniqueMonths);
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async getAmountManagmentPayments() {
+    try {
+      const result = await Orders.findAll({
+        where: {
+          is_credit: true,
+          buyDate: new Date().toISOString().slice(0, 10),
+        },
+      });
+      result.total = 0;
+      result.forEach((order) => {
+        result.total += order.total;
+      });
+      return result.total;
     } catch (error) {
       throw error;
     }

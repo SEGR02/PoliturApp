@@ -138,7 +138,7 @@ const ChoosePaymentMethod = ({ set, total, operatorsList }) => {
                     ? paymentType?.value
                     : "Credito",
                   currency: currency?.value ? currency?.value : "CLP",
-                  operator: operator?.value,
+                  operator: operator?.name,
                   amount,
                 })
               );
