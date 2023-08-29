@@ -184,7 +184,17 @@ const scheudleActivities = () => {
                 <label className={styles.label} htmlFor="">
                   Hora de la Actividad
                 </label>
-                <InputCustom options={schedules} value={""} set={setHour} />
+                {schedules && (
+                  <InputCustom options={schedules} value={""} set={setHour} />
+                )}
+                {!schedules && (
+                  <input
+                    className={styles.inputText}
+                    type="time"
+                    value={hour}
+                    onChange={(e) => setHour(e.target.value)}
+                  />
+                )}
               </div>
               <div className={styles.inputsContainer50}>
                 <label className={styles.label} htmlFor="">

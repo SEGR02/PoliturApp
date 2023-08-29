@@ -29,7 +29,7 @@ function TableCalendar({ data }) {
     }
     setTimeout(() => {
       setFinalData(data);
-    }, 50);
+    }, 100);
   }, [data]);
 
   if (!data) return null;
