@@ -25,8 +25,11 @@ const Confirm = () => {
   const [payments, setPayments] = React.useState<any>([]);
   const [totalPayments, setTotalPayments] = React.useState<any>();
   const paymentsList = useSelector((state: any) => state.paymentsList.data);
-  const sellerId: any = localStorage.getItem("sellerId");
   const [operatorsList, setOperatorsList] = React.useState();
+  let sellerId: any;
+  if (typeof window !== "undefined") {
+    sellerId = localStorage.getItem("sellerId");
+  }
 
   const submit = () => {
     const date = new Date();
