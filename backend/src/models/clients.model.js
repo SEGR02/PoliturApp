@@ -48,7 +48,6 @@ const Clients = db.define("clients", {
   },
   operator: {
     type: DataTypes.STRING(50),
-    allowNull: false,
   },
 });
 
