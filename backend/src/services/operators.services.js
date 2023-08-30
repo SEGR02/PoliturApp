@@ -1,4 +1,3 @@
-const { where } = require("sequelize");
 const Operators = require("../models/operators.models");
 
 class OperatorServices {

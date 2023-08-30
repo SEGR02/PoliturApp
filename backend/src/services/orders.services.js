@@ -67,12 +67,13 @@ class OrderServices {
       throw error;
     }
   }
-  static async getAmountManagmentPayments() {
+  static async getAmountManagmentPaymentsByOperator(operator) {
     try {
       const result = await Orders.findAll({
         where: {
           is_credit: true,
           buyDate: new Date().toISOString().slice(0, 10),
+          operator: operator,
         },
       });
       result.total = 0;

@@ -39,6 +39,25 @@ class AuthServices {
       throw error;
     }
   }
+
+  static async updateSeller(id, newData) {
+    try {
+      const updateSeller = await Users.update(newData, {
+        where: { id },
+      });
+      return updateSeller;
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async delete(id) {
+    try {
+      const updateSeller = await Users.destroy({ where: { id } });
+      return updateSeller;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = AuthServices;

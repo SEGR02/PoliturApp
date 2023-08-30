@@ -1,22 +1,45 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 
-const TableManagePayments = () => {
+const TableManagePayments = ({
+  sinceDate = undefined,
+  untilDate = undefined,
+  operator = undefined,
+}) => {
+  const [data, setData] = useState([]);
+  const [total, setTotal] = useState(0);
   const headers = [
     "#",
     "Fecha",
     "Hora",
     "Titulo",
     "Forma de Pago",
+    "Operador",
     "Observaciones",
     "Monto",
   ];
 
   useEffect(() => {
-    const url = `http://localhost:8000/api/v1/managmentPayments`;
-    axios.get(url).then((res) => console.log(res.data));
-  }, []);
+    let total = 0;
+    let url = `http://localhost:8000/api/v1/managmentPayments?`;
+    if (sinceDate && untilDate) {
+      url += `&sinceDate=${sinceDate}&untilDate=${untilDate}`;
+    }
+    if (operator) url += `&operator=${operator}`;
+
+    axios.get(url).then((res) => {
+      setData(res.data);
+      res.data.forEach((managmentPayment: any) => {
+        if (managmentPayment.paymentFormat == "Credito") {
+          total -= managmentPayment.amount;
+        } else {
+          total += managmentPayment.amount;
+        }
+      });
+      setTotal(total);
+    });
+  }, [sinceDate, untilDate, operator]);
 
   return (
     <Table>
@@ -30,15 +53,26 @@ const TableManagePayments = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td style={{ textAlign: "center" }}>1</td>
-          <td style={{ textAlign: "center" }}>2023-08-27</td>
-          <td style={{ textAlign: "center" }}>10:00</td>
-          <td style={{ textAlign: "center" }}>Informe de Credito</td>
-          <td style={{ textAlign: "center" }}>Credito</td>
-          <td style={{ textAlign: "center" }}>Deposito en efectivo</td>
-          <td style={{ textAlign: "center" }}>-50,000</td>
-        </tr>
+        {data?.map((managmentPayment: any, index: any) => (
+          <tr>
+            <td style={{ textAlign: "center" }}>{index + 1}</td>
+            <td style={{ textAlign: "center" }}>{managmentPayment.date}</td>
+            <td style={{ textAlign: "center" }}>{managmentPayment.hour}</td>
+            <td style={{ textAlign: "center" }}>{managmentPayment.title}</td>
+            <td style={{ textAlign: "center" }}>
+              {managmentPayment.paymentFormat}
+            </td>
+            <td style={{ textAlign: "center" }}>{managmentPayment.operator}</td>
+            <td style={{ textAlign: "center" }}>
+              {managmentPayment.observations}
+            </td>
+            <td style={{ textAlign: "center" }}>
+              {managmentPayment.paymentFormat === "Credito"
+                ? `-${managmentPayment.amount}`
+                : `${managmentPayment.amount}`}
+            </td>
+          </tr>
+        ))}
       </tbody>
       <tfoot>
         <tr>
@@ -47,8 +81,13 @@ const TableManagePayments = () => {
           <td></td>
           <td></td>
           <td></td>
-          <td style={{ textAlign: "center" }}>Total</td>
-          <td style={{ textAlign: "center" }}>-50,000</td>
+          <td></td>
+          <td style={{ textAlign: "center" }}>
+            <b>Total</b>
+          </td>
+          <td style={{ textAlign: "center" }}>
+            <b>{total}</b>
+          </td>
         </tr>
       </tfoot>
     </Table>

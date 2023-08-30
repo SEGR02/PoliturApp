@@ -41,29 +41,31 @@ const CreditsReport = () => {
         <div className={styles.secondLine}></div>
         <div className={styles.bodyContent}>
           <form className={styles2.inputsContainer} action="">
-            <div className={styles3.datesContainers}>
-              <label className={styles3.datesLabels} htmlFor="">
-                Desde
-              </label>
-              <input
-                className={styles.inputText}
-                style={{ height: "6vh" }}
-                type="date"
-                value={sinceDate}
-                onChange={(e) => setSinceData(e.target.value)}
-              />
-            </div>
-            <div className={styles3.datesContainers}>
-              <label className={styles3.datesLabels} htmlFor="">
-                Hasta
-              </label>
-              <input
-                className={styles.inputText}
-                style={{ height: "6vh" }}
-                type="date"
-                value={untilDate}
-                onChange={(e) => setUntilData(e.target.value)}
-              />
+            <div style={{ display: "flex", gap: "5px" }}>
+              <div className={styles3.datesContainers}>
+                <label className={styles3.datesLabels} htmlFor="">
+                  Desde
+                </label>
+                <input
+                  className={styles.inputText}
+                  style={{ height: "6vh" }}
+                  type="date"
+                  value={sinceDate}
+                  onChange={(e) => setSinceData(e.target.value)}
+                />
+              </div>
+              <div className={styles3.datesContainers}>
+                <label className={styles3.datesLabels} htmlFor="">
+                  Hasta
+                </label>
+                <input
+                  className={styles.inputText}
+                  style={{ height: "6vh" }}
+                  type="date"
+                  value={untilDate}
+                  onChange={(e) => setUntilData(e.target.value)}
+                />
+              </div>
             </div>
           </form>
           {sinceDate && untilDate && !operator && (
