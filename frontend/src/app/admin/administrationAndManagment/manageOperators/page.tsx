@@ -1,17 +1,17 @@
 "use client";
 import React from "react";
-import styles from "../../styles/sellerHome.module.css";
-import NavbarAdmin from "@/app/components/NavbarAdmin";
+import styles from "../../../styles/sellerHome.module.css";
+import NavbarAdministrationAndManagment from "@/app/components/NavbarAdministrationAndManagment";
 
-const AllCredits = () => {
+const AdminOperators = () => {
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
-        <h2>Listado de Todos los Creditos</h2>
+        <h2>Administrar Operadores</h2>
       </div>
       <div className={styles.firstLine}></div>
       <div className={styles.bodyContainer}>
-        <NavbarAdmin />
+        <NavbarAdministrationAndManagment />
         <div className={styles.secondLine}></div>
         <div className={styles.bodyContent}></div>
       </div>
@@ -19,4 +19,4 @@ const AllCredits = () => {
   );
 };
 
-export default AllCredits;
+export default AdminOperators;

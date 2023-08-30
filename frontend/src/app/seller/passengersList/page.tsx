@@ -69,28 +69,30 @@ const PassengerList = () => {
         <div className={styles.secondLine}></div>
         <div className={styles.bodyContent}>
           <form className={styles2.inputsContainer} action="">
-            <input
-              className={styles.inputText}
-              style={{ height: "6vh" }}
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-            <InputCustom
-              placeholder="Seleccionar Actividad"
-              options={activiesList}
-              value={activitySelected}
-              set={setActivitySelected}
-            />
-            <InputCustom
-              placeholder="Seleccionar Hora"
-              options={schedules}
-              value={""}
-              set={setHour}
-            />
-            <button type="button" onClick={submit}>
-              Buscar
-            </button>
+            <div style={{ display: "flex", gap: "5px" }}>
+              <input
+                className={styles.inputText}
+                style={{ height: "6vh" }}
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+              <InputCustom
+                placeholder="Seleccionar Actividad"
+                options={activiesList}
+                value={activitySelected}
+                set={setActivitySelected}
+              />
+              <InputCustom
+                placeholder="Seleccionar Hora"
+                options={schedules}
+                value={""}
+                set={setHour}
+              />
+              <button type="button" onClick={submit}>
+                Buscar
+              </button>
+            </div>
           </form>
           <Table data={data} />
           {data && (

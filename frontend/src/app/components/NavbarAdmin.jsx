@@ -13,8 +13,8 @@ import creditsReport from "@/assets/creditsReport.svg";
 import creditsReportYellow from "@/assets/creditsReportYellow.svg";
 import managePayments from "@/assets/managePayments.svg";
 import managePaymentsYellow from "@/assets/managePaymentsYellow.svg";
-import allCredits from "@/assets/allCredits.svg";
-import allCreditsYellow from "@/assets/allCreditsYellow.svg";
+import administrationAndManagment from "@/assets/administrationAndManagment.svg";
+import administrationAndManagmentYellow from "@/assets/administrationAndManagmentYellow.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -139,19 +139,28 @@ const NavbarAdmin = () => {
           </p>
         </div>
       </Link>
-      <Link className={styles.link} href="/admin/allCredits">
+      <Link
+        className={styles.link}
+        href="/admin/administrationAndManagment/sellerRegister"
+      >
         <div className={styles.elementNavbar}>
           <Image
             src={
-              pathname == "/admin/allCredits" ? allCredits : allCreditsYellow
+              pathname == "/admin/administrationAndManagment/sellerRegister"
+                ? administrationAndManagment
+                : administrationAndManagmentYellow
             }
             alt=""
           />
           <p
             className={styles.navbarP}
-            style={pathname == "/admin/allCredits" ? { color: "#002B5c" } : {}}
+            style={
+              pathname == "/admin/administrationAndManagment/sellerRegister"
+                ? { color: "#002B5c" }
+                : {}
+            }
           >
-            Todos Creditos
+            Administracion y Gestion
           </p>
         </div>
       </Link>

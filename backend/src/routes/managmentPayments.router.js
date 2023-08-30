@@ -9,6 +9,6 @@ const router = Router();
 
 router.get("/", getAllManagmentPayments);
 router.post("/", createManagmentPayment);
-cron.schedule("59 23 * * *", createAutomaticManagmentPayment);
+cron.schedule("56 17 * * *", createAutomaticManagmentPayment);
 
 module.exports = router;

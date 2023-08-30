@@ -44,6 +44,11 @@ const Users = db.define(
         const hash = bcrypt.hashSync(password, 10);
         user.password = hash;
       },
+      beforeUpdate: (user, options) => {
+        const { password } = user;
+        const hash = bcrypt.hashSync(password, 10);
+        user.password = hash;
+      },
     },
   }
 );

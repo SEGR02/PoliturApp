@@ -32,6 +32,10 @@ const ManagmentPayments = db.define("managment_payments", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  operator: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 module.exports = ManagmentPayments;
