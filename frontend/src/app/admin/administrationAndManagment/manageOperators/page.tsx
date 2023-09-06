@@ -2,6 +2,7 @@
 import React from "react";
 import styles from "../../../styles/sellerHome.module.css";
 import NavbarAdministrationAndManagment from "@/app/components/NavbarAdministrationAndManagment";
+import TableManageOperators from "@/app/components/TableManageOperators";
 
 const AdminOperators = () => {
   return (
@@ -13,7 +14,9 @@ const AdminOperators = () => {
       <div className={styles.bodyContainer}>
         <NavbarAdministrationAndManagment />
         <div className={styles.secondLine}></div>
-        <div className={styles.bodyContent}></div>
+        <div className={styles.bodyContent}>
+          <TableManageOperators />
+        </div>
       </div>
     </div>
   );

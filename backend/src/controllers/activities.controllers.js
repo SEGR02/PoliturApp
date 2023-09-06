@@ -90,9 +90,44 @@ const getAllActivitiesScheduled = async (req, res, next) => {
   }
 };
 
+const createActivity = async (req, res, next) => {
+  try {
+    const newActivity = req.body;
+    console.log(newActivity);
+    const result = await ActivitieServices.createActivity(newActivity);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const deleteActivity = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const result = await ActivitieServices.deleteActivity(id);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateActivity = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const newActivityData = req.body;
+    const result = await ActivitieServices.updateActivity(id, newActivityData);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllActivities,
   scheduleActivity,
   getActivityById,
   getAllActivitiesScheduled,
+  createActivity,
+  deleteActivity,
+  updateActivity,
 };
