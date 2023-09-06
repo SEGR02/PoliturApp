@@ -7,8 +7,10 @@ import TableReports from "@/app/components/TableReports";
 import axios from "axios";
 
 const MonthlyReport = () => {
-  const [month, setmonth] = React.useState<any>();
+  const [month, setMonth] = React.useState<any>();
   const [options, setOptions] = React.useState<any>();
+  const [sellersList, setSellersList] = React.useState<any>();
+  const [sellerSelected, setSellerSelected] = React.useState<any>();
 
   useEffect(() => {
     axios
@@ -16,17 +18,30 @@ const MonthlyReport = () => {
         "https://politurapp-production.up.railway.app/api/v1/orders/availableMonths"
       )
       .then((res) => setOptions(res.data));
+
+    axios.get("http://localhost:8000/api/v1/users").then((res) => {
+      res.data.forEach((seller: any) => {
+        seller.label = seller.fullname;
+      });
+      setSellersList(res.data);
+    });
   }, [month]);
 
   return (
     <div className={styles.container}>
       <div className={styles.titleContainer}>
-        <div style={{ width: "16%" }}>
+        <div style={{ width: "33%", display: "flex", gap: "20px" }}>
           <InputCustom
             value={month}
-            set={setmonth}
+            set={setMonth}
             options={options}
-            placeholder="Seleccione un periodo"
+            placeholder="Seleccione un periodo *"
+          />
+          <InputCustom
+            value={sellerSelected}
+            set={setSellerSelected}
+            options={sellersList}
+            placeholder="Seleccione un Vendedor"
           />
         </div>
       </div>
@@ -35,10 +50,17 @@ const MonthlyReport = () => {
         <NavbarAdmin />
         <div className={styles.secondLine}></div>
         <div className={styles.bodyContent}>
-          {month && (
+          {month && !sellerSelected && (
             <TableReports
               customMonth={month.slice(0, 2)}
               customYear={month.slice(3)}
+            />
+          )}
+          {month && sellerSelected && (
+            <TableReports
+              customMonth={month.slice(0, 2)}
+              customYear={month.slice(3)}
+              sellerId={sellerSelected?.id}
             />
           )}
         </div>

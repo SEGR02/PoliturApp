@@ -12,7 +12,7 @@ import axios from "axios";
 const PassengerList = () => {
   const dispatch = useDispatch();
   const activiesList = useSelector((state: any) => state.activitiesList);
-  const [activitySelected, setActivitySelected] = React.useState<any>([]);
+  const [activitySelected, setActivitySelected] = React.useState<any>();
   const [hour, setHour] = React.useState<any>();
   const [date, setDate] = React.useState<any>();
   const [data, setData] = React.useState<any>();
@@ -47,10 +47,14 @@ const PassengerList = () => {
   }, []);
 
   const submit = () => {
+    let url = `https://politurapp-production.up.railway.app/api/v1/activities/scheduled?`; // date=${date}&hour=${hour?.label}&activityId=${activitySelected?.id}
+
+    if (date) url += `&date=${date}`;
+    if (hour?.label) url += `&hour=${hour?.label}`;
+    if (activitySelected?.id) url += `&activityId=${activitySelected?.id}`;
+
     axios
-      .get(
-        `https://politurapp-production.up.railway.app/api/v1/activities/scheduled?date=${date}&hour=${hour?.label}&activityId=${activitySelected?.id}`
-      )
+      .get(url)
       .then((res) => {
         setData(res.data);
         setHour("");
