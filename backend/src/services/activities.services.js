@@ -83,6 +83,37 @@ class ActivitieServices {
       throw error;
     }
   }
+
+  static async createActivity(newActivity) {
+    try {
+      const result = await Activities.create(newActivity);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteActivity(id) {
+    try {
+      const result = await Activities.destroy({
+        where: { id },
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updateActivity(id, newActivityData) {
+    try {
+      const result = await Activities.update(newActivityData, {
+        where: { id },
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = ActivitieServices;
