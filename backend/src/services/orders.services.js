@@ -12,7 +12,7 @@ class OrderServices {
   }
   static async getAllOrders(query) {
     try {
-      const { month, year, sinceDate, untilDate, operator } = query;
+      const { month, year, sinceDate, untilDate, operator, sellerId } = query;
       const filters = {};
       if (month && year) {
         const startDate = new Date(`${year}-${month}-01T00:00:00.000Z`);
@@ -24,6 +24,7 @@ class OrderServices {
           [Op.gte]: startDate,
           [Op.lt]: endDate,
         };
+        if (sellerId) filters.sellerId = sellerId;
       }
 
       if (sinceDate && untilDate) {

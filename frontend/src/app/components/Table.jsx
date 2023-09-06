@@ -25,6 +25,10 @@ function ResponsiveExample({ data }) {
         axios
           .get(`http://localhost:8000/api/v1/clients/${element.id}`)
           .then((res) => {
+            res.data.forEach((user) => {
+              user.hour = element.hour;
+              user.date = element.date;
+            });
             aux.push(...res.data);
           })
           .catch((error) => console.log(error));
@@ -60,19 +64,15 @@ function ResponsiveExample({ data }) {
         {dataPrueba?.map((data, index) => (
           <tr>
             <td style={{ textAlign: "center" }}>{index + 1}</td>
-            {data?.map((data) => (
-              <>
-                <td style={{ textAlign: "center" }}>{data.fullname}</td>
-                <td style={{ textAlign: "center" }}>{data.birth}</td>
-                <td style={{ textAlign: "center" }}>{data.age}</td>
-                <td style={{ textAlign: "center" }}>{data.nationality}</td>
-                <td style={{ textAlign: "center" }}>{data.ndocument}</td>
-                <td style={{ textAlign: "center" }}>{data.number}</td>
-                <td style={{ textAlign: "center" }}>{"3:00 pm"}</td>
-                <td style={{ textAlign: "center" }}>{"15/08/2023"}</td>
-                <td style={{ textAlign: "center" }}>{data.hotel}</td>
-              </>
-            ))}
+            <td style={{ textAlign: "center" }}>{data.fullname}</td>
+            <td style={{ textAlign: "center" }}>{data.birth}</td>
+            <td style={{ textAlign: "center" }}>{data.age}</td>
+            <td style={{ textAlign: "center" }}>{data.nationality}</td>
+            <td style={{ textAlign: "center" }}>{data.ndocument}</td>
+            <td style={{ textAlign: "center" }}>{data.number}</td>
+            <td style={{ textAlign: "center" }}>{data.hour}</td>
+            <td style={{ textAlign: "center" }}>{data.date}</td>
+            <td style={{ textAlign: "center" }}>{data.hotel}</td>
           </tr>
         ))}
       </tbody>

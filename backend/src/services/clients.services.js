@@ -29,7 +29,7 @@ class ClientServices {
       const result2 = [];
       for (const element of result) {
         const aux = await Clients.findAll({ where: { id: element.clientId } });
-        result2.push(aux);
+        result2.push(...aux);
       }
       return result2;
     } catch (error) {

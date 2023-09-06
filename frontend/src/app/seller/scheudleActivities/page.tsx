@@ -26,7 +26,7 @@ const scheudleActivities = () => {
   const [clients, setClients] = useState([]);
   const [activities, setActivities] = useState([]);
   const [activitySelected, setActivitySelected] = useState<Activity | any>();
-  const [schedules, setSchedules] = useState<any>();
+  const [schedules, setSchedules] = useState<any>([]);
   const router = useRouter();
   const dispatch = useDispatch<any>();
 
@@ -37,7 +37,7 @@ const scheudleActivities = () => {
       currency: currency.value,
       date,
       discount,
-      hour: hour.schedule,
+      hour: schedules.length > 0 ? hour.schedule : hour,
       isCredit: isCredit.value,
       passengers,
       passengersQty: passengers.length,
@@ -131,6 +131,8 @@ const scheudleActivities = () => {
       .catch((error) => console.log(error));
   }, []);
 
+  console.log(hour);
+
   return (
     <>
       <div className={styles.container}>
@@ -178,12 +180,26 @@ const scheudleActivities = () => {
               </div>
             </div>
             <div className={styles.inputs50Container}>
-              <div className={styles.inputsContainer50}>
-                <label className={styles.label} htmlFor="">
-                  Hora de la Actividad
-                </label>
-                <InputCustom options={schedules} value={""} set={setHour} />
-              </div>
+              {schedules?.length > 0 && (
+                <div className={styles.inputsContainer50}>
+                  <label className={styles.label} htmlFor="">
+                    Hora de la Actividad
+                  </label>
+                  <InputCustom options={schedules} value={""} set={setHour} />
+                </div>
+              )}
+              {schedules?.length == 0 && (
+                <div className={styles.inputsContainer50}>
+                  <label className={styles.label} htmlFor="">
+                    Hora de la Actividad
+                  </label>
+                  <input
+                    className={styles.inputText}
+                    type="time"
+                    onChange={(e) => setHour(e.target.value)}
+                  />
+                </div>
+              )}
               <div className={styles.inputsContainer50}>
                 <label className={styles.label} htmlFor="">
                   Porcentaje de Descuento
