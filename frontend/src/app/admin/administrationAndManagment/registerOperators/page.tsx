@@ -12,7 +12,10 @@ const RegisterOperators = () => {
     const newOperator = { name: operatorName, email: operatorEmail };
 
     axios
-      .post("http://localhost:8000/api/v1/operators", newOperator)
+      .post(
+        "https://politurapp-production.up.railway.app/api/v1/operators",
+        newOperator
+      )
       .then((res) => alert("user created" + res.status));
   };
 

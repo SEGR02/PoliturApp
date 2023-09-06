@@ -24,14 +24,20 @@ const CreateActivity = () => {
     console.log(schedulesList);
 
     axios
-      .post("http://localhost:8000/api/v1/activities/create", newActivity)
+      .post(
+        "https://politurapp-production.up.railway.app/api/v1/activities/create",
+        newActivity
+      )
       .then((res) => {
         schedulesList.forEach((schedule: any) => {
           axios
-            .post("http://localhost:8000/api/v1/schedules", {
-              activityId: res.data.id,
-              schedule: schedule?.label,
-            })
+            .post(
+              "https://politurapp-production.up.railway.app/api/v1/schedules",
+              {
+                activityId: res.data.id,
+                schedule: schedule?.label,
+              }
+            )
             .then((res) => alert("Registro de horario exitoso" + res.status))
             .catch((err) => console.log(err));
         });

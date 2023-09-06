@@ -27,12 +27,13 @@ function ModalEditActivity({
     };
 
     axios
-      .put(`http://localhost:8000/api/v1/activities/${activity?.id}`, data)
+      .put(
+        `https://politurapp-production.up.railway.app/api/v1/activities/${activity?.id}`,
+        data
+      )
       .then((res) => alert("Actividad actualizada" + res.status));
     handleClose();
   };
-
-  console.log(isChecked);
 
   return (
     <>

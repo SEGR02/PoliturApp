@@ -14,14 +14,18 @@ const TableManageOperators = () => {
   const [deleteButton, setDeleteButton] = React.useState<any>(false);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/v1/operators").then((res) => {
-      setData(res.data);
-    });
+    axios
+      .get("https://politurapp-production.up.railway.app/api/v1/operators")
+      .then((res) => {
+        setData(res.data);
+      });
   }, [showModal]);
 
   const deleteOperator = (id: any) => {
     axios
-      .delete(`http://localhost:8000/api/v1/operators/${id}`)
+      .delete(
+        `https://politurapp-production.up.railway.app/api/v1/operators/${id}`
+      )
       .then((res) => alert("Operador eliminado" + res.status));
   };
 

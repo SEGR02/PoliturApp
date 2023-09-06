@@ -14,18 +14,20 @@ const TableManageActivities = () => {
   const [deleteButton, setDeleteButton] = React.useState<any>(false);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/v1/activities").then((res) => {
-      setData(res.data);
-    });
+    axios
+      .get("https://politurapp-production.up.railway.app/api/v1/activities")
+      .then((res) => {
+        setData(res.data);
+      });
   }, [showModal]);
 
   const deleteSeller = (id: any) => {
     axios
-      .delete(`http://localhost:8000/api/v1/activities/${id}`)
+      .delete(
+        `https://politurapp-production.up.railway.app/api/v1/activities/${id}`
+      )
       .then((res) => alert("Actividad eliminada " + res.status));
   };
-
-  console.log(data);
 
   return (
     <Table>

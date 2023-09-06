@@ -21,7 +21,10 @@ function ModalEditOperator({
     };
 
     axios
-      .put(`http://localhost:8000/api/v1/operators/${operator?.id}`, data)
+      .put(
+        `https://politurapp-production.up.railway.app/api/v1/operators/${operator?.id}`,
+        data
+      )
       .then((res) => alert("Operador actualizado" + res.status));
     handleClose();
   };
