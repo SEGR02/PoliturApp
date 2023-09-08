@@ -9,7 +9,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const Login: FC = () => {
-  localStorage.clear();
   const router = useRouter();
   const submit = (): void => {
     event?.preventDefault();
