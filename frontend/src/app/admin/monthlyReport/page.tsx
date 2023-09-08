@@ -19,12 +19,14 @@ const MonthlyReport = () => {
       )
       .then((res) => setOptions(res.data));
 
-    axios.get("http://localhost:8000/api/v1/users").then((res) => {
-      res.data.forEach((seller: any) => {
-        seller.label = seller.fullname;
+    axios
+      .get("https://politurapp-production.up.railway.app/api/v1/users")
+      .then((res) => {
+        res.data.forEach((seller: any) => {
+          seller.label = seller.fullname;
+        });
+        setSellersList(res.data);
       });
-      setSellersList(res.data);
-    });
   }, [month]);
 
   return (

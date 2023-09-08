@@ -29,7 +29,10 @@ function ModalEditScheduleActivity({
     };
 
     axios
-      .put(`http://localhost:8000/api/v1/stock/${seller?.id}`, data)
+      .put(
+        `https://politurapp-production.up.railway.app/api/v1/stock/${seller?.id}`,
+        data
+      )
       .then((res) => alert("Actividad Agendada Actualizada " + res.status));
     handleClose();
   };

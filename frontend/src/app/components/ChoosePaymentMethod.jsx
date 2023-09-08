@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import styles2 from "../styles/sellerConfirm.module.css";
 import styles from "../styles/sellerHome.module.css";
 import InputCustom from "./InputCustom";

@@ -5,7 +5,7 @@ import Table from "react-bootstrap/Table";
 import trash from "@/assets/🦆 icon _trash_.svg";
 import pencil from "@/assets/🦆 icon _pencil_.svg";
 import ModalEditSeller from "./ModalEditSeller";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const TableManageSellers = () => {
   const headers = ["#", "Nombre", "Email", "Contraseña"];

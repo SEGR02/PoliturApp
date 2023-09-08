@@ -13,19 +13,21 @@ const TableManageScheduledActivities = () => {
   const [deleteButton, setDeleteButton] = React.useState<any>(false);
 
   useEffect(() => {
-    axios.get("http://localhost:8000/api/v1/stock").then((res) => {
-      console.log(res.data);
-      res.data.forEach((stockManagment: any) => {
-        axios
-          .get(
-            `http://localhost:8000/api/v1/activities/${stockManagment.activityId}`
-          )
-          .then((res) => {
-            stockManagment.activityName = res.data?.[0].name;
-          });
+    axios
+      .get("https://politurapp-production.up.railway.app/api/v1/stock")
+      .then((res) => {
+        console.log(res.data);
+        res.data.forEach((stockManagment: any) => {
+          axios
+            .get(
+              `https://politurapp-production.up.railway.app/api/v1/activities/${stockManagment.activityId}`
+            )
+            .then((res) => {
+              stockManagment.activityName = res.data?.[0].name;
+            });
+        });
+        setTimeout(() => setData(res.data), 50);
       });
-      setTimeout(() => setData(res.data), 50);
-    });
   }, [showModal]);
 
   return (

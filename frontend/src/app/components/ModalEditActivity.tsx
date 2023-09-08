@@ -35,7 +35,9 @@ function ModalEditActivity({
 
     isChecked && schedulesList.length > 0
       ? axios
-          .delete(`http://localhost:8000/api/v1/schedules/${activity?.id}`)
+          .delete(
+            `https://politurapp-production.up.railway.app/api/v1/schedules/${activity?.id}`
+          )
           .then((res) => alert("Horarios viejos eliminados" + res.status))
       : console.log("No se borraron los horarios al actualizar");
 
@@ -47,7 +49,10 @@ function ModalEditActivity({
           };
 
           axios
-            .post("http://localhost:8000/api/v1/schedules", data)
+            .post(
+              "https://politurapp-production.up.railway.app/api/v1/schedules",
+              data
+            )
             .then((res) => alert("Horarios nuevos agregados" + res.status))
             .catch((err) => console.log(err));
         })

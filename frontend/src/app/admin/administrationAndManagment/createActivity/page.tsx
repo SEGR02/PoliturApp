@@ -20,9 +20,6 @@ const CreateActivity = () => {
       tiketsPerDay: maxPassengers,
     };
 
-    console.log(newActivity);
-    console.log(schedulesList);
-
     axios
       .post(
         "https://politurapp-production.up.railway.app/api/v1/activities/create",

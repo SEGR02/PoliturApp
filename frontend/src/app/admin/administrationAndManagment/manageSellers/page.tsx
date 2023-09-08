@@ -3,7 +3,7 @@ import React from "react";
 import styles from "../../../styles/sellerHome.module.css";
 import NavbarAdministrationAndManagment from "@/app/components/NavbarAdministrationAndManagment";
 import TableManageSellers from "@/app/components/TableManageSellers";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 const ManageSellers = () => {
   return (
