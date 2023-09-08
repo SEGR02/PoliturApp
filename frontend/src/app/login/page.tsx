@@ -9,6 +9,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const Login: FC = () => {
+  localStorage.clear();
   const router = useRouter();
   const submit = (): void => {
     event?.preventDefault();
@@ -18,8 +19,10 @@ const Login: FC = () => {
         password,
       })
       .then((res) => {
-        router.push("/seller/createClient");
+        if (res.data.isAdmin) router.push("/admin/dailyReport");
+        else router.push("/seller/createClient");
         localStorage.setItem("sellerId", res.data.id);
+        localStorage.setItem("isAdmin", res.data.isAdmin);
       })
       .catch((error) => alert("Credenciales incorrectas" + error));
   };

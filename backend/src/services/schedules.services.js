@@ -26,7 +26,7 @@ class ScheduleServices {
   static async deleteSchedule(id) {
     try {
       const result = await SchedulesInActivities.destroy({
-        where: { id },
+        where: { activityId: id },
       });
 
       return result;

@@ -57,7 +57,7 @@ const PassengerList = () => {
       .get(url)
       .then((res) => {
         setData(res.data);
-        setHour("");
+        setTimeout(() => setHour(""), 50);
       })
       .catch((error) => console.log(error));
   };

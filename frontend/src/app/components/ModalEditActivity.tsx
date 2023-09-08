@@ -14,7 +14,7 @@ function ModalEditActivity({
   const [newTicketValue, setNewTicketValue] = useState(activity.ticketValue);
   const [newStock, setNewStock] = useState(activity.tiketsPerDay);
   const [schedules, setSchedules] = useState<any>([]);
-  const [schedulesList, setSchedulesList] = useState();
+  const [schedulesList, setSchedulesList] = useState<any>();
   const [isChecked, setIsChecked] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -32,7 +32,27 @@ function ModalEditActivity({
         data
       )
       .then((res) => alert("Actividad actualizada" + res.status));
-    handleClose();
+
+    isChecked && schedulesList.length > 0
+      ? axios
+          .delete(`http://localhost:8000/api/v1/schedules/${activity?.id}`)
+          .then((res) => alert("Horarios viejos eliminados" + res.status))
+      : console.log("No se borraron los horarios al actualizar");
+
+    isChecked && schedulesList.length > 0
+      ? schedulesList.forEach((schedule: any) => {
+          const data = {
+            activityId: activity.id,
+            schedule: schedule.label,
+          };
+
+          axios
+            .post("http://localhost:8000/api/v1/schedules", data)
+            .then((res) => alert("Horarios nuevos agregados" + res.status))
+            .catch((err) => console.log(err));
+        })
+      : handleClose();
+    setTimeout(() => handleClose(), 1000);
   };
 
   return (

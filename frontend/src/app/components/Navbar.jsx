@@ -9,6 +9,7 @@ import clockblue from "../../assets/clockblue.svg";
 import userYellow from "../../assets/user-yellow.svg";
 import peopleBlue from "../../assets/peopleBlue.svg";
 import calendarblue from "../../assets/calendarblue.svg";
+import logOut from "../../assets/🦆 icon _logout_.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import NavbarAdmin from "./NavbarAdmin";
@@ -85,6 +86,12 @@ const Navbar = () => {
           >
             Calendar
           </p>
+        </div>
+      </Link>
+      <Link className={styles.link} href="/login">
+        <div className={styles.elementNavbar}>
+          <Image src={logOut} alt="" />
+          <p className={styles.navbarP}>Cerrar Sesion</p>
         </div>
       </Link>
     </div>

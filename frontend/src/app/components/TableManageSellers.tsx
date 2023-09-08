@@ -5,13 +5,13 @@ import Table from "react-bootstrap/Table";
 import trash from "@/assets/🦆 icon _trash_.svg";
 import pencil from "@/assets/🦆 icon _pencil_.svg";
 import ModalEditSeller from "./ModalEditSeller";
+import { ToastContainer, toast } from "react-toastify";
 
 const TableManageSellers = () => {
   const headers = ["#", "Nombre", "Email", "Contraseña"];
-  const [data, setData] = React.useState([]);
+  const [data, setData] = React.useState<any>();
   const [showModal, setShowModal] = React.useState<any>(false);
   const [sellerSelected, setSellerSelected] = React.useState<any>(false);
-  const [deleteButton, setDeleteButton] = React.useState<any>(false);
 
   useEffect(() => {
     axios
@@ -21,14 +21,22 @@ const TableManageSellers = () => {
       .then((res) => {
         setData(res.data);
       });
-  }, [showModal]);
+  }, []);
 
-  const deleteSeller = (id: any) => {
+  const deleteSeller = (id: any, index: any) => {
     axios
       .delete(
         `https://politurapp-production.up.railway.app/api/v1/auth/delete/${id}`
       )
-      .then((res) => alert("Vendedor eliminado" + res.status));
+      .then((res) => {
+        toast.success("¡Vendedor Eliminado con Exito!", {
+          theme: "colored",
+        });
+        setData((prevData: any) =>
+          prevData.filter((seller: any, i: any) => i !== index)
+        );
+      })
+      .catch((err) => toast.error("Error " + err));
   };
 
   return (
@@ -41,8 +49,8 @@ const TableManageSellers = () => {
         </tr>
       </thead>
       <tbody>
-        {data?.map((seller: any, index) => (
-          <tr style={deleteButton ? { display: "none" } : {}} key={index + 1}>
+        {data?.map((seller: any, index: any) => (
+          <tr key={index + 1}>
             <td style={{ textAlign: "center" }}>{index + 1}</td>
             <td style={{ textAlign: "center" }}>{seller.fullname}</td>
             <td style={{ textAlign: "center" }}>{seller.email}</td>
@@ -63,10 +71,7 @@ const TableManageSellers = () => {
                 style={{ marginLeft: "10px", cursor: "pointer" }}
                 src={trash}
                 alt=""
-                onClick={() => {
-                  deleteSeller(seller.id);
-                  setDeleteButton(!deleteButton);
-                }}
+                onClick={() => deleteSeller(seller.id, index)}
               />
             </td>
           </tr>

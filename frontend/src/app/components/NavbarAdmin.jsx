@@ -15,6 +15,7 @@ import managePayments from "@/assets/managePayments.svg";
 import managePaymentsYellow from "@/assets/managePaymentsYellow.svg";
 import administrationAndManagment from "@/assets/administrationAndManagment.svg";
 import administrationAndManagmentYellow from "@/assets/administrationAndManagmentYellow.svg";
+import logOut from "@/assets/🦆 icon _logout_.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -162,6 +163,12 @@ const NavbarAdmin = () => {
           >
             Administracion y Gestion
           </p>
+        </div>
+      </Link>
+      <Link className={styles.link} href="/login">
+        <div className={styles.elementNavbar}>
+          <Image src={logOut} alt="" />
+          <p className={styles.navbarP}>Cerrar Sesion</p>
         </div>
       </Link>
     </div>

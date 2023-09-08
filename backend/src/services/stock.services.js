@@ -65,6 +65,17 @@ class StockServices {
       throw error;
     }
   }
+
+  static async modifyStock(id, newStock) {
+    try {
+      const result = await StockManagment.update(newStock, {
+        where: { id },
+      });
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = StockServices;
