@@ -3,14 +3,16 @@ import React, { useState } from "react";
 import styles from "../../../styles/sellerHome.module.css";
 import NavbarAdministrationAndManagment from "@/app/components/NavbarAdministrationAndManagment";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 const SellerRegister = () => {
-  const [name, setName] = useState();
-  const [rut, setRut] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [name, setName] = useState<any>();
+  const [rut, setRut] = useState<any>();
+  const [email, setEmail] = useState<any>();
+  const [password, setPassword] = useState<any>();
 
   const submit = () => {
+    event?.preventDefault();
     const newSeller = {
       fullname: name,
       email,
@@ -21,8 +23,22 @@ const SellerRegister = () => {
 
     axios
       .post("http://localhost:8000/api/v1/auth/register", newSeller)
-      .then((res) => alert("user created" + res.status));
+      .then((res) => notify())
+      .catch((err) => toast.error("Error " + err))
+      .finally(clearAll);
   };
+
+  const clearAll = () => {
+    setName("");
+    setRut("");
+    setEmail("");
+    setPassword("");
+  };
+
+  const notify = () =>
+    toast.success("¡Vendedor Creado con Exito!", {
+      theme: "colored",
+    });
 
   return (
     <div className={styles.container}>
@@ -34,61 +50,62 @@ const SellerRegister = () => {
         <NavbarAdministrationAndManagment />
         <div className={styles.secondLine}></div>
         <div className={styles.bodyContent}>
-          <div className={styles.inputsContainer}>
-            <label className={styles.label} htmlFor="">
-              Nombre y Apellido
-            </label>
-            <input
-              className={styles.inputText}
-              type="text"
-              value={name}
-              onChange={(e: any) => setName(e.target.value)}
-            />
-          </div>
-          <div className={styles.inputs50Container}>
-            <div className={styles.inputsContainer50}>
+          <form onSubmit={submit}>
+            <div className={styles.inputsContainer}>
               <label className={styles.label} htmlFor="">
-                Rut
+                Nombre y Apellido
               </label>
               <input
+                required
                 className={styles.inputText}
                 type="text"
-                value={rut}
-                onChange={(e: any) => setRut(e.target.value)}
+                value={name}
+                onChange={(e: any) => setName(e.target.value)}
               />
             </div>
-            <div className={styles.inputsContainer50}>
+            <div className={styles.inputs50Container}>
+              <div className={styles.inputsContainer50}>
+                <label className={styles.label} htmlFor="">
+                  Rut
+                </label>
+                <input
+                  required
+                  className={styles.inputText}
+                  type="text"
+                  value={rut}
+                  onChange={(e: any) => setRut(e.target.value)}
+                />
+              </div>
+              <div className={styles.inputsContainer50}>
+                <label className={styles.label} htmlFor="">
+                  Email
+                </label>
+                <input
+                  required
+                  className={styles.inputText}
+                  type="text"
+                  value={email}
+                  onChange={(e: any) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className={styles.inputsContainer}>
               <label className={styles.label} htmlFor="">
-                Email
+                Contraseña
               </label>
               <input
+                required
                 className={styles.inputText}
-                type="text"
-                value={email}
-                onChange={(e: any) => setEmail(e.target.value)}
+                type="password"
+                value={password}
+                onChange={(e: any) => setPassword(e.target.value)}
               />
             </div>
-          </div>
-          <div className={styles.inputsContainer}>
-            <label className={styles.label} htmlFor="">
-              Contraseña
-            </label>
-            <input
-              className={styles.inputText}
-              type="password"
-              value={password}
-              onChange={(e: any) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className={styles.buttonContainer}>
-            <button
-              type="submit"
-              onClick={() => submit()}
-              className={styles.button}
-            >
-              Guardar
-            </button>
-          </div>
+            <div className={styles.buttonContainer}>
+              <button className={styles.button}>Guardar</button>
+              <ToastContainer position="bottom-right" />
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -36,8 +36,20 @@ const getStock = async (req, res, next) => {
   }
 };
 
+const updateStock = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const newStock = req.body;
+    const result = await StockServices.modifyStock(id, newStock);
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   createStock,
   findAndUpdateStock,
   getStock,
+  updateStock,
 };

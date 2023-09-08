@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import viewPassword from "@/assets/viewPassword.svg";
 import Image from "next/image";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 function ModalEditSeller({
   isShow = false,
@@ -27,7 +28,13 @@ function ModalEditSeller({
 
     axios
       .put(`http://localhost:8000/api/v1/auth/update/${seller?.id}`, data)
-      .then((res) => alert("Vendedor actualizado" + res.status));
+      .then((res) =>
+        toast.success("¡Vendedor Actualizado con Exito!", {
+          theme: "colored",
+        })
+      )
+      .catch((err) => toast.error("Error " + err));
+
     handleClose();
   };
 

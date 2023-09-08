@@ -13,6 +13,10 @@ import registerOperators from "@/assets/registerOperators.svg";
 import registerOperatorsYellow from "@/assets/registerOperatorsYellow.svg";
 import adminOperators from "@/assets/adminOperators.svg";
 import adminOperatorsYellow from "@/assets/adminOperatorsYellow.svg";
+import acitivitesScheduled from "@/assets/manageScheduledActivities.svg";
+import acitivitesScheduledYellow from "@/assets/🦆 icon _menu board_.svg";
+import back from "@/assets/back.svg";
+import logOut from "@/assets/🦆 icon _logout_.svg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -123,6 +127,33 @@ const NavbarAdministrationAndManagment = () => {
       </Link>
       <Link
         className={styles.link}
+        href="/admin/administrationAndManagment/manageScheduledActivities"
+      >
+        <div className={styles.elementNavbar}>
+          <Image
+            src={
+              pathname ==
+              "/admin/administrationAndManagment/manageScheduledActivities"
+                ? acitivitesScheduled
+                : acitivitesScheduledYellow
+            }
+            alt=""
+          />
+          <p
+            className={styles.navbarP}
+            style={
+              pathname ==
+              "/admin/administrationAndManagment/manageScheduledActivities"
+                ? { color: "#002B5c" }
+                : {}
+            }
+          >
+            Activ Agendadas
+          </p>
+        </div>
+      </Link>
+      <Link
+        className={styles.link}
         href="/admin/administrationAndManagment/registerOperators"
       >
         <div className={styles.elementNavbar}>
@@ -169,6 +200,18 @@ const NavbarAdministrationAndManagment = () => {
           >
             Admin Operadores
           </p>
+        </div>
+      </Link>
+      <Link className={styles.link} href="/admin/dailyReport">
+        <div className={styles.elementNavbar}>
+          <Image src={back} alt="" />
+          <p className={styles.navbarP}>Informes</p>
+        </div>
+      </Link>
+      <Link className={styles.link} href="/login">
+        <div className={styles.elementNavbar}>
+          <Image src={logOut} alt="" />
+          <p className={styles.navbarP}>Cerrar Sesion</p>
         </div>
       </Link>
     </div>
