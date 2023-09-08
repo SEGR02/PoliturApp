@@ -22,18 +22,13 @@ const SellerRegister = () => {
     };
 
     axios
-<<<<<<< HEAD
       .post(
         "https://politurapp-production.up.railway.app/api/v1/auth/register",
         newSeller
       )
-      .then((res) => alert("user created" + res.status));
-=======
-      .post("http://localhost:8000/api/v1/auth/register", newSeller)
       .then((res) => notify())
       .catch((err) => toast.error("Error " + err))
       .finally(clearAll);
->>>>>>> main
   };
 
   const clearAll = () => {
