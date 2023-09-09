@@ -15,7 +15,9 @@ import { setIsLoading } from "@/store/slices/isLoading.slice";
 const Login: FC = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector((state: any) => state.isLoading);
-  localStorage.clear();
+  if (typeof window !== "undefined") {
+    localStorage.clear();
+  }
   const router = useRouter();
   const submit = (): void => {
     dispatch(setIsLoading(true));
