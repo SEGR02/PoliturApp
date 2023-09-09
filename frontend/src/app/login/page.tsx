@@ -7,26 +7,41 @@ import viewPassword from "../../assets/viewPassword.svg";
 import React, { FC } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import LoadingScreen from "../components/LoadingScreen";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsLoading } from "@/store/slices/isLoading.slice";
 
 const Login: FC = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state: any) => state.isLoading);
   localStorage.clear();
   const router = useRouter();
   const submit = (): void => {
+    dispatch(setIsLoading(true));
     event?.preventDefault();
     axios
       .post("http://localhost:8000/api/v1/auth/login", { email, password })
       .then((res) => {
-        if (res.data.isAdmin) router.push("/admin/dailyReport");
-        else router.push("/seller/createClient");
+        toast.success("¡Inicio de Sesion Exitoso!", {
+          theme: "colored",
+        });
+        setTimeout(() => {
+          if (res.data.isAdmin) router.push("/admin/dailyReport");
+          else router.push("/seller/createClient");
+        }, 1000);
         localStorage.setItem("sellerId", res.data.id);
         localStorage.setItem("isAdmin", res.data.isAdmin);
       })
-      .catch((error) => alert("Credenciales incorrectas" + error));
+      .catch((err) => toast.error("Error " + err?.response?.data?.message))
+      .finally(() => dispatch(setIsLoading(false)));
   };
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [viewPasswordInput, setViewPasswordInput] = React.useState(true);
+
+  if (isLoading) return <LoadingScreen />;
 
   return (
     <div className={styles.container}>
@@ -91,6 +106,7 @@ const Login: FC = () => {
       <div className={styles.logoContainer}>
         <Image className={styles.logo} src={logo} alt="" />
       </div>
+      <ToastContainer position="bottom-right" />
     </div>
   );
 };

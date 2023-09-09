@@ -4,8 +4,12 @@ import { ReactNode, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
-  const sellerId = localStorage.getItem("sellerId");
-  const isAdmin = localStorage.getItem("isAdmin");
+  let sellerId: any;
+  let isAdmin: any;
+  if (typeof window !== "undefined") {
+    sellerId = localStorage.getItem("sellerId");
+    isAdmin = localStorage.getItem("isAdmin");
+  }
   const router = useRouter();
   const pathname = usePathname();
 
