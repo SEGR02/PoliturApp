@@ -8,19 +8,13 @@ import React, { FC } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
-import LoadingScreen from "../components/LoadingScreen";
-import { useDispatch, useSelector } from "react-redux";
-import { setIsLoading } from "@/store/slices/isLoading.slice";
 
 const Login: FC = () => {
-  const dispatch = useDispatch();
-  const isLoading = useSelector((state: any) => state.isLoading);
   if (typeof window !== "undefined") {
     localStorage.clear();
   }
   const router = useRouter();
   const submit = (): void => {
-    dispatch(setIsLoading(true));
     event?.preventDefault();
     axios
       .post("http://localhost:8000/api/v1/auth/login", { email, password })
@@ -35,15 +29,12 @@ const Login: FC = () => {
         localStorage.setItem("sellerId", res.data.id);
         localStorage.setItem("isAdmin", res.data.isAdmin);
       })
-      .catch((err) => toast.error("Error " + err?.response?.data?.message))
-      .finally(() => dispatch(setIsLoading(false)));
+      .catch((err) => toast.error("Error " + err?.response?.data?.message));
   };
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [viewPasswordInput, setViewPasswordInput] = React.useState(true);
-
-  if (isLoading) return <LoadingScreen />;
 
   return (
     <div className={styles.container}>
