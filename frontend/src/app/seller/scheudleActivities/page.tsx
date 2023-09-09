@@ -7,11 +7,16 @@ import InputCustom from "../../components/InputCustom";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setActivities2 } from "@/store/slices/activities.slice";
 import { setActivitiesList } from "@/store/slices/activitiesList.slice";
+import { setIsLoading } from "@/store/slices/isLoading.slice";
 
 const scheudleActivities = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state: any) => state.isLoading);
+  const router = useRouter();
+
   const [passengers, setPassengers] = useState<any>([]);
   const [date, setDate] = useState("");
   const [hour, setHour] = useState<any>("");
@@ -27,10 +32,9 @@ const scheudleActivities = () => {
   const [activities, setActivities] = useState([]);
   const [activitySelected, setActivitySelected] = useState<Activity | any>();
   const [schedules, setSchedules] = useState<any>([]);
-  const router = useRouter();
-  const dispatch = useDispatch<any>();
 
   const submit = () => {
+    dispatch(setIsLoading(true));
     const data = {
       activityId: activitySelected?.id,
       activityName: activitySelected?.name,
